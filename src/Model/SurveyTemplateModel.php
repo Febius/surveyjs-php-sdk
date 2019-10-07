@@ -23,39 +23,47 @@ class SurveyTemplateModel
     /**
      * @return SurveyPageModel[]
      */
-    public function getPages()
+    public function getPages(): array
     {
         return $this->pages;
     }
 
     /**
-     * @param SurveyPageModel[] $pages
+     * @param $pages
+     *
+     * @return SurveyTemplateModel
      */
-    public function setPages($pages)
+    public function setPages($pages): self
     {
         $this->pages = $pages;
+
+        return $this;
     }
 
     /**
      * @return string
      */
-    public function getShowNavigationButtons()
+    public function getShowNavigationButtons(): string
     {
         return $this->showNavigationButtons;
     }
 
     /**
-     * @param string $showNavigationButtons
+     * @param $showNavigationButtons
+     *
+     * @return SurveyTemplateModel
      */
-    public function setShowNavigationButtons($showNavigationButtons)
+    public function setShowNavigationButtons($showNavigationButtons): self
     {
         $this->showNavigationButtons = $showNavigationButtons;
+
+        return $this;
     }
 
     /**
      * @return bool
      */
-    public function isShowPageTitles()
+    public function isShowPageTitles(): bool
     {
         return $this->showPageTitles;
     }
@@ -63,40 +71,50 @@ class SurveyTemplateModel
     /**
      * @param bool $showPageTitles
      */
-    public function setShowPageTitles($showPageTitles)
+    public function setShowPageTitles($showPageTitles): self
     {
         $this->showPageTitles = $showPageTitles;
+
+        return $this;
     }
 
     /**
      * @return bool
      */
-    public function isShowCompletedPage()
+    public function isShowCompletedPage(): bool
     {
         return $this->showCompletedPage;
     }
 
     /**
-     * @param bool $showCompletedPage
+     * @param $showCompletedPage
+     *
+     * @return SurveyTemplateModel
      */
-    public function setShowCompletedPage($showCompletedPage)
+    public function setShowCompletedPage($showCompletedPage): self
     {
         $this->showCompletedPage = $showCompletedPage;
+
+        return $this;
     }
 
     /**
      * @return string
      */
-    public function getShowQuestionNumbers()
+    public function getShowQuestionNumbers(): string
     {
         return $this->showQuestionNumbers;
     }
 
     /**
-     * @param string $showQuestionNumbers
+     * @param $showQuestionNumbers
+     *
+     * @return SurveyTemplateModel
      */
-    public function setShowQuestionNumbers($showQuestionNumbers)
+    public function setShowQuestionNumbers($showQuestionNumbers): self
     {
         $this->showQuestionNumbers = $showQuestionNumbers;
+
+        return $this;
     }
 }

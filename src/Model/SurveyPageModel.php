@@ -15,32 +15,40 @@ class SurveyPageModel
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * @param string $name
+     * @param $name
+     *
+     * @return SurveyPageModel
      */
-    public function setName($name)
+    public function setName($name): self
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
      * @return SurveyElementModel[]
      */
-    public function getElements()
+    public function getElements(): array
     {
         return $this->elements;
     }
 
     /**
-     * @param SurveyElementModel[] $elements
+     * @param $elements
+     *
+     * @return SurveyPageModel
      */
-    public function setElements($elements)
+    public function setElements($elements): self
     {
         $this->elements = $elements;
+
+        return $this;
     }
 }

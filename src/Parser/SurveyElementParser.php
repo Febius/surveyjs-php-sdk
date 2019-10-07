@@ -13,7 +13,8 @@ class SurveyElementParser
      *
      * @return SurveyElementModel[]
      */
-    public static function parseToModel(array $elements){
+    public static function parseToModel(array $elements): array
+    {
 
         $elementsModels = [];
 

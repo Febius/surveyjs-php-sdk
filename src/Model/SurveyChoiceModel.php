@@ -15,32 +15,40 @@ class SurveyChoiceModel
     /**
      * @return string
      */
-    public function getValue()
+    public function getValue(): string
     {
         return $this->value;
     }
 
     /**
-     * @param string $value
+     * @param $value
+     *
+     * @return SurveyChoiceModel
      */
-    public function setValue($value)
+    public function setValue($value): self
     {
         $this->value = $value;
+
+        return $this;
     }
 
     /**
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
 
     /**
-     * @param string $text
+     * @param $text
+     *
+     * @return SurveyChoiceModel
      */
-    public function setText($text)
+    public function setText($text): self
     {
         $this->text = $text;
+
+        return $this;
     }
 }
