@@ -16,8 +16,8 @@ class SurveyPageParser
      *
      * @return SurveyPageModel[]
      */
-    public static function parseToModel(array $pages){
-
+    public static function parseToModel(array $pages): array
+    {
         $pagesModels = [];
 
         foreach($pages as $page){

@@ -14,7 +14,8 @@ class SurveyChoiceParser
      *
      * @return SurveyChoiceModel[]
      */
-    public static function parseToModel(array $choices){
+    public static function parseToModel(array $choices): array
+    {
         $choicesModels = [];
 
         foreach($choices as $choice){

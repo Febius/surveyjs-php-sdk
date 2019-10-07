@@ -15,32 +15,40 @@ class SurveyResultModel
     /**
      * @return string
      */
-    public function getQuestion()
+    public function getQuestion(): string
     {
         return $this->question;
     }
 
     /**
-     * @param string $question
+     * @param $question
+     *
+     * @return SurveyResultModel
      */
-    public function setQuestion($question)
+    public function setQuestion($question): self
     {
         $this->question = $question;
+
+        return $this;
     }
 
     /**
      * @return string
      */
-    public function getAnswer()
+    public function getAnswer(): string
     {
         return $this->answer;
     }
 
     /**
-     * @param string $answer
+     * @param $answer
+     *
+     * @return SurveyResultModel
      */
-    public function setAnswer($answer)
+    public function setAnswer($answer): self
     {
         $this->answer = $answer;
+
+        return $this;
     }
 }

@@ -18,7 +18,8 @@ class SurveyTemplateParser
      *
      * @return SurveyTemplateModel
      */
-    public static function parseToModel(string $jsonTemplate){
+    public static function parseToModel(string $jsonTemplate): SurveyTemplateModel
+    {
         $decodedTemplate = json_decode($jsonTemplate);
 
         if(!$decodedTemplate['pages']){

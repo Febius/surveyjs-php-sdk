@@ -17,8 +17,9 @@ class SurveyResultParser
      * @param SurveyTemplateModel $survey
      * @param string $jsonResults
      *
-     * @return SurveyResultModel[]
      * @throws InvalidSurveyResultException
+     *
+     * @return SurveyResultModel[]
      */
     public static function parseToModel(SurveyTemplateModel $survey, string $jsonResults): array
     {
