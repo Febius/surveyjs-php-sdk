@@ -138,4 +138,28 @@ class SurveyElementModel
     {
         $this->choices = $choices;
     }
+
+    /**
+     * @param SurveyResultModel $result
+     *
+     * @return bool
+     */
+    public function isValidResult(SurveyResultModel $result): bool
+    {
+        if($this->getName() === $result->getQuestion()){
+
+            if($this->getType() === 'text'){
+                return true;
+            }
+
+            /** @var SurveyChoiceModel $choice */
+            foreach($this->getChoices() as $choice){
+                if($choice->getValue() === $result->getAnswer()){
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 }
