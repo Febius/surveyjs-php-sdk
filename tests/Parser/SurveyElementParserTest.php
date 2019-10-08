@@ -16,7 +16,7 @@ class SurveyElementParserTest extends TestCase
     protected function setUp()
     {
         $element1 = (object)[
-            'type'         => 'text',
+            'type'         => 'comment',
             'name'         => 'element_1',
             'title'        => 'Element 1',
             'isRequired'   => true,
@@ -40,10 +40,45 @@ class SurveyElementParserTest extends TestCase
             'isRequired'   => false,
             'choicesOrder' => 'desc',
             'enableIf'     => 'implausible conditions',
-            'choices'      => [$choice1, $choice2]
+            'choices'      => [$choice1, $choice2, 'item3']
         ];
 
-        $this->elementsToParse = [$element1, $element2];
+        $element3 = (object)[
+            'type'         => 'rating',
+            'name'         => 'element_3',
+            'title'        => 'Element 3',
+            'isRequired'   => false,
+            'enableIf'     => 'implausible conditions',
+            'rateMax'      => 6
+        ];
+
+        $element4 = (object)[
+            'type'         => 'rating',
+            'name'         => 'element_3',
+            'title'        => 'Element 3',
+            'isRequired'   => false,
+            'enableIf'     => 'implausible conditions',
+            'rateValues'   => [
+                '1',
+                '2',
+                '3',
+                '4',
+                $choice2
+            ],
+            'rateMax'      => 6
+        ];
+
+        $element5 = (object)[
+            'type'         => 'checkbox',
+            'name'         => 'element_2',
+            'title'        => 'Element 2',
+            'isRequired'   => false,
+            'choicesOrder' => 'desc',
+            'enableIf'     => 'implausible conditions',
+            'choices'      => [$choice1, $choice2, 'item3']
+        ];
+
+        $this->elementsToParse = [$element1, $element2, $element3, $element4, $element5];
     }
 
     public function testParseToModel(){
@@ -56,8 +91,7 @@ class SurveyElementParserTest extends TestCase
             $this->assertEquals($element->title, $models[$index]->getTitle());
             $this->assertEquals($element->isRequired, $models[$index]->isRequired());
 
-            if(isset($element->choicesOrder)){
-                $this->assertEquals($element->choicesOrder, $models[$index]->getChoicesOrder());
+            if(in_array($element->type, ['rating', 'checkbox', 'radiogroup'])){
 
                 foreach($models[$index]->getChoices() as $choice){
                     $this->assertInstanceOf(SurveyChoiceModel::class, $choice);
