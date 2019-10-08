@@ -176,7 +176,7 @@ class SurveyElementModel
     {
         if($this->getName() === $result->getQuestion()){
 
-            if($this->getType() === 'text'){
+            if($this->getType() === 'comment'){
                 return true;
             }
 
