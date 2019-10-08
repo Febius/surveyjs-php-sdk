@@ -49,7 +49,7 @@ class SurveyResultParser
      *
      * @return bool
      */
-    public static function validateResult(array $pages, SurveyResultModel $result): bool
+    private static function validateResult(array $pages, SurveyResultModel $result): bool
     {
         /** @var SurveyPageModel $page */
         foreach($pages as $page){
