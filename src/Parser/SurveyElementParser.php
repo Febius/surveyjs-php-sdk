@@ -22,36 +22,32 @@ class SurveyElementParser
 
             $elementModel = new SurveyElementModel();
 
-            if(isset($element['type'])){
-                $elementModel->setType($element['type']);
+            if(isset($element->type)){
+                $elementModel->setType($element->type);
             }
 
-            if(isset($element['name'])){
-                $elementModel->setName($element['name']);
+            if(isset($element->name)){
+                $elementModel->setName($element->name);
             }
 
-            if(isset($element['title'])){
-                $elementModel->setTitle($element['title']);
+            if(isset($element->title)){
+                $elementModel->setTitle($element->title);
             }
 
-            if(isset($element['title'])){
-                $elementModel->setTitle($element['title']);
+            if(isset($element->isRequired)){
+                $elementModel->setIsRequired($element->isRequired);
             }
 
-            if(isset($element['isRequired'])){
-                $elementModel->setIsRequired($element['isRequired']);
+            if(isset($element->choicesOrder)){
+                $elementModel->setChoicesOrder($element->choicesOrder);
             }
 
-            if(isset($element['choicesOrder'])){
-                $elementModel->setChoicesOrder($element['choicesOrder']);
+            if(isset($element->enableIf)){
+                $elementModel->setEnableIf($element->enableIf);
             }
 
-            if(isset($element['enableIf'])){
-                $elementModel->setEnableIf($element['enableIf']);
-            }
-
-            if(isset($element['choices'])){
-                $elementModel->setChoices(SurveyChoiceParser::parseToModel($element['choices']));
+            if(isset($element->choices)){
+                $elementModel->setChoices(SurveyChoiceParser::parseToModel($element->choices));
             }
 
             $elementsModels[] = $elementModel;

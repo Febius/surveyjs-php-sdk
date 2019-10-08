@@ -21,9 +21,9 @@ class SurveyChoiceParser
         foreach($choices as $choice){
             $choiceModel = new SurveyChoiceModel();
 
-            $choiceModel->setText($choice['text']);
+            $choiceModel->setText($choice->text);
 
-            $choiceModel->setValue($choice['value']);
+            $choiceModel->setValue($choice->value);
 
             $choicesModels[] = $choiceModel;
         }
