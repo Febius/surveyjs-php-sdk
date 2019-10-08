@@ -25,13 +25,13 @@ class SurveyResultParser
     {
         $resultsModels = [];
 
-        $results = json_decode($jsonResults);
+        $results = (array)json_decode($jsonResults);
 
-        foreach($results as $result){
+        foreach($results as $question => $result){
             $resultModel = new SurveyResultModel();
 
-            $resultModel->setQuestion($result['question']);
-            $resultModel->setAnswer($result['answer']);
+            $resultModel->setQuestion($question);
+            $resultModel->setAnswer($result);
 
             if(!self::validateResult($survey->getPages(), $resultModel)){
                 throw new InvalidSurveyResultException();

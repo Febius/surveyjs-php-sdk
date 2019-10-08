@@ -5,14 +5,15 @@ namespace SurveyJsPhpSdk\Tests\Parser;
 
 
 use PHPUnit\Framework\TestCase;
-use SurveyJsPhpSdk\Exception\PagePropertyNotFoundException;
-use SurveyJsPhpSdk\Model\SurveyPageModel;
+use SurveyJsPhpSdk\Exception\InvalidSurveyResultException;
+use SurveyJsPhpSdk\Model\SurveyResultModel;
+use SurveyJsPhpSdk\Parser\SurveyResultParser;
 use SurveyJsPhpSdk\Parser\SurveyTemplateParser;
 
-class SurveyTemplateParserTest extends TestCase
+class SurveyResultParserTest extends TestCase
 {
 
-    private $testCaseSuccess = '
+    private $templateJson = '
     {
               "pages": [
                 {
@@ -87,30 +88,39 @@ class SurveyTemplateParserTest extends TestCase
               "showQuestionNumbers": "off"
             }';
 
-    private $testCaseFail = '{
-              "showNavigationButtons": "none",
-              "showPageTitles": false,
-              "showCompletedPage": false,
-              "showQuestionNumbers": "off"
-            }';
+    private $testCaseSuccess = '{"question1":"2","question2":"2","question3":"some extra notes","question4":"1"}';
+    private $testCaseFail1 = '{"question1":"3","question2":"2","question3":"some extra notes","question4":"1"}';
+    private $testCaseFail2 = '{"question5":"2","question2":"2","question3":"some extra notes","question4":"1"}';
+
+
 
 
     public function testParseToModel(){
-        $model = SurveyTemplateParser::parseToModel($this->testCaseSuccess);
 
-        $this->assertEquals('none', $model->getShowNavigationButtons());
-        $this->assertEquals(false, $model->isShowPageTitles());
-        $this->assertEquals(false, $model->isShowCompletedPage());
-        $this->assertEquals('off', $model->getShowQuestionNumbers());
+        $models = SurveyResultParser::parseToModel(SurveyTemplateParser::parseToModel($this->templateJson), $this->testCaseSuccess);
 
-        foreach($model->getPages() as $page){
-            $this->assertInstanceOf(SurveyPageModel::class, $page);
+        $testCase = (array)json_decode($this->testCaseSuccess);
+
+        $testQuestions = array_keys($testCase);
+
+        $testAnswers = array_values($testCase);
+
+        foreach($models as $index => $model){
+            $this->assertInstanceOf(SurveyResultModel::class, $model);
+            $this->assertEquals($testQuestions[$index], $model->getQuestion());
+            $this->assertEquals($testAnswers[$index], $model->getAnswer());
         }
     }
 
-    public function testParseToModelRaiseException(){
-        $this->expectException(PagePropertyNotFoundException::class);
+    public function testParseToModelRaiseExceptionWrongAnswer(){
+        $this->expectException(InvalidSurveyResultException::class);
 
-        SurveyTemplateParser::parseToModel($this->testCaseFail);
+        SurveyResultParser::parseToModel(SurveyTemplateParser::parseToModel($this->templateJson), $this->testCaseFail1);
+    }
+
+    public function testParseToModelRaiseExceptionWrongQuestion(){
+        $this->expectException(InvalidSurveyResultException::class);
+
+        SurveyResultParser::parseToModel(SurveyTemplateParser::parseToModel($this->templateJson), $this->testCaseFail2);
     }
 }
