@@ -23,13 +23,13 @@ class SurveyPageParser
         foreach($pages as $page){
             $pageModel = new SurveyPageModel();
 
-            $pageModel->setName($page['name']);
+            $pageModel->setName($page->name);
 
-            if(!isset($page['elements'])){
+            if(!isset($page->elements)){
                 throw new ElementPropertyNotFoundException();
             }
 
-            $pageModel->setElements(SurveyElementParser::parseToModel($page['elements']));
+            $pageModel->setElements(SurveyElementParser::parseToModel($page->elements));
 
             $pagesModels[] = $pageModel;
         }
