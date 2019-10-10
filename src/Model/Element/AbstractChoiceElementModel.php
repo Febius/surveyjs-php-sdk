@@ -45,7 +45,7 @@ abstract class AbstractChoiceElementModel extends AbstractSurveyElementModel
     }
 
     /**
-     * @param array SurveyChoiceModel[] $choices
+     * @param SurveyChoiceModel[] $choices
      *
      * @return AbstractChoiceElementModel
      */

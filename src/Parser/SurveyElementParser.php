@@ -114,7 +114,7 @@ class SurveyElementParser
      * @param CheckboxElement $model
      * @param \stdClass $element
      *
-     * @return CheckboxElement
+     * @return AbstractChoiceElementModel
      */
     private static function parseCheckboxElement(CheckboxElement $model, \stdClass $element): AbstractChoiceElementModel
     {
