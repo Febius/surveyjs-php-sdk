@@ -25,7 +25,7 @@ class SurveyChoiceModel
      *
      * @return SurveyChoiceModel
      */
-    public function setValue($value): self
+    public function setValue(string $value): self
     {
         $this->value = $value;
 
@@ -45,7 +45,7 @@ class SurveyChoiceModel
      *
      * @return SurveyChoiceModel
      */
-    public function setText($text): self
+    public function setText(string $text): self
     {
         $this->text = $text;
 

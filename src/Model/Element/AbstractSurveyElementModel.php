@@ -16,7 +16,7 @@ abstract class AbstractSurveyElementModel
     private $title;
 
     /** @var boolean */
-    private $isRequired;
+    private $required;
 
     /** @var string */
     private $enableIf;
@@ -66,17 +66,17 @@ abstract class AbstractSurveyElementModel
      */
     public function isRequired(): bool
     {
-        return $this->isRequired;
+        return $this->required;
     }
 
     /**
-     * @param bool $isRequired
+     * @param bool $required
      *
      * @return AbstractSurveyElementModel
      */
-    public function setIsRequired(bool $isRequired): self
+    public function setRequired(bool $required): self
     {
-        $this->isRequired = $isRequired;
+        $this->required = $required;
 
         return $this;
     }
