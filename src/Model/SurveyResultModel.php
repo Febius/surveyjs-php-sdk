@@ -21,11 +21,11 @@ class SurveyResultModel
     }
 
     /**
-     * @param $question
+     * @param string $question
      *
      * @return SurveyResultModel
      */
-    public function setQuestion($question): self
+    public function setQuestion(string $question): self
     {
         $this->question = $question;
 
@@ -41,11 +41,11 @@ class SurveyResultModel
     }
 
     /**
-     * @param $answer
+     * @param string $answer
      *
      * @return SurveyResultModel
      */
-    public function setAnswer($answer): self
+    public function setAnswer(string $answer): self
     {
         $this->answer = $answer;
 

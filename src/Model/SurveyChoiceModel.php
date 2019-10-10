@@ -1,8 +1,6 @@
 <?php
 
-
 namespace SurveyJsPhpSdk\Model;
-
 
 class SurveyChoiceModel
 {
@@ -21,7 +19,7 @@ class SurveyChoiceModel
     }
 
     /**
-     * @param $value
+     * @param string $value
      *
      * @return SurveyChoiceModel
      */
@@ -41,7 +39,7 @@ class SurveyChoiceModel
     }
 
     /**
-     * @param $text
+     * @param string $text
      *
      * @return SurveyChoiceModel
      */

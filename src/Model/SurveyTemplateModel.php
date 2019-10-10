@@ -29,11 +29,11 @@ class SurveyTemplateModel
     }
 
     /**
-     * @param $pages
+     * @param SurveyPageModel[] $pages
      *
      * @return SurveyTemplateModel
      */
-    public function setPages($pages): self
+    public function setPages(array $pages): self
     {
         $this->pages = $pages;
 
@@ -49,11 +49,11 @@ class SurveyTemplateModel
     }
 
     /**
-     * @param $showNavigationButtons
+     * @param string $showNavigationButtons
      *
      * @return SurveyTemplateModel
      */
-    public function setShowNavigationButtons($showNavigationButtons): self
+    public function setShowNavigationButtons(string $showNavigationButtons): self
     {
         $this->showNavigationButtons = $showNavigationButtons;
 
@@ -70,8 +70,10 @@ class SurveyTemplateModel
 
     /**
      * @param bool $showPageTitles
+     *
+     * @return SurveyTemplateModel
      */
-    public function setShowPageTitles($showPageTitles): self
+    public function setShowPageTitles(bool $showPageTitles): self
     {
         $this->showPageTitles = $showPageTitles;
 
@@ -87,11 +89,11 @@ class SurveyTemplateModel
     }
 
     /**
-     * @param $showCompletedPage
+     * @param bool $showCompletedPage
      *
      * @return SurveyTemplateModel
      */
-    public function setShowCompletedPage($showCompletedPage): self
+    public function setShowCompletedPage(bool $showCompletedPage): self
     {
         $this->showCompletedPage = $showCompletedPage;
 
@@ -107,11 +109,11 @@ class SurveyTemplateModel
     }
 
     /**
-     * @param $showQuestionNumbers
+     * @param string $showQuestionNumbers
      *
      * @return SurveyTemplateModel
      */
-    public function setShowQuestionNumbers($showQuestionNumbers): self
+    public function setShowQuestionNumbers(string $showQuestionNumbers): self
     {
         $this->showQuestionNumbers = $showQuestionNumbers;
 

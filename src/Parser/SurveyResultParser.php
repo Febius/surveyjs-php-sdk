@@ -5,6 +5,7 @@ namespace SurveyJsPhpSdk\Parser;
 
 
 use SurveyJsPhpSdk\Exception\InvalidSurveyResultException;
+use SurveyJsPhpSdk\Model\Element\AbstractSurveyElementModel;
 use SurveyJsPhpSdk\Model\SurveyElementModel;
 use SurveyJsPhpSdk\Model\SurveyPageModel;
 use SurveyJsPhpSdk\Model\SurveyResultModel;
@@ -44,7 +45,7 @@ class SurveyResultParser
     }
 
     /**
-     * @param array $pages
+     * @param SurveyPageModel[] $pages
      * @param SurveyResultModel $result
      *
      * @return bool
@@ -53,7 +54,7 @@ class SurveyResultParser
     {
         /** @var SurveyPageModel $page */
         foreach($pages as $page){
-            /** @var SurveyElementModel $element */
+            /** @var AbstractSurveyElementModel $element */
             foreach($page->getElements() as $element){
                 if($element->isValidResult($result)){
                     return true;
