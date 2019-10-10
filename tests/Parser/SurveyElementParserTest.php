@@ -5,6 +5,8 @@ namespace SurveyJsPhpSdk\Tests\Parser;
 
 
 use PHPUnit\Framework\TestCase;
+use SurveyJsPhpSdk\Factory\ElementModelFactory;
+use SurveyJsPhpSdk\Model\Element\AbstractSurveyElementModel;
 use SurveyJsPhpSdk\Model\SurveyChoiceModel;
 use SurveyJsPhpSdk\Model\SurveyElementModel;
 use SurveyJsPhpSdk\Parser\SurveyElementParser;
@@ -16,7 +18,7 @@ class SurveyElementParserTest extends TestCase
     protected function setUp()
     {
         $element1 = (object)[
-            'type'         => 'comment',
+            'type'         => ElementModelFactory::COMMENT_TYPE,
             'name'         => 'element_1',
             'title'        => 'Element 1',
             'isRequired'   => true,
@@ -34,7 +36,7 @@ class SurveyElementParserTest extends TestCase
         ];
 
         $element2 = (object)[
-            'type'         => 'radiogroup',
+            'type'         => ElementModelFactory::RADIOGROUP_TYPE,
             'name'         => 'element_2',
             'title'        => 'Element 2',
             'isRequired'   => false,
@@ -44,7 +46,7 @@ class SurveyElementParserTest extends TestCase
         ];
 
         $element3 = (object)[
-            'type'         => 'rating',
+            'type'         => ElementModelFactory::RATING_TYPE,
             'name'         => 'element_3',
             'title'        => 'Element 3',
             'isRequired'   => false,
@@ -53,7 +55,7 @@ class SurveyElementParserTest extends TestCase
         ];
 
         $element4 = (object)[
-            'type'         => 'rating',
+            'type'         => ElementModelFactory::RATING_TYPE,
             'name'         => 'element_3',
             'title'        => 'Element 3',
             'isRequired'   => false,
@@ -69,7 +71,7 @@ class SurveyElementParserTest extends TestCase
         ];
 
         $element5 = (object)[
-            'type'         => 'checkbox',
+            'type'         => ElementModelFactory::CHECKBOX_TYPE,
             'name'         => 'element_2',
             'title'        => 'Element 2',
             'isRequired'   => false,
@@ -85,13 +87,12 @@ class SurveyElementParserTest extends TestCase
         $models = SurveyElementParser::parseToModel($this->elementsToParse);
 
         foreach($this->elementsToParse as $index => $element){
-            $this->assertInstanceOf(SurveyElementModel::class, $models[$index]);
-            $this->assertEquals($element->type, $models[$index]->getType());
+            $this->assertInstanceOf(ElementModelFactory::TYPE_TO_CLASS_MAP[$element->type], $models[$index]);
             $this->assertEquals($element->name, $models[$index]->getName());
             $this->assertEquals($element->title, $models[$index]->getTitle());
             $this->assertEquals($element->isRequired, $models[$index]->isRequired());
 
-            if(in_array($element->type, ['rating', 'checkbox', 'radiogroup'])){
+            if(in_array($element->type, [ElementModelFactory::RADIOGROUP_TYPE, ElementModelFactory::RATING_TYPE, ElementModelFactory::CHECKBOX_TYPE])){
 
                 foreach($models[$index]->getChoices() as $choice){
                     $this->assertInstanceOf(SurveyChoiceModel::class, $choice);
