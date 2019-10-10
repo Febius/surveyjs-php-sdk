@@ -4,14 +4,23 @@
 namespace SurveyJsPhpSdk\Parser;
 
 
-use SurveyJsPhpSdk\Model\SurveyElementModel;
+use SurveyJsPhpSdk\Exception\UnknownElementTypeException;
+use SurveyJsPhpSdk\Factory\ElementModelFactory;
+use SurveyJsPhpSdk\Model\Element\AbstractChoiceElementModel;
+use SurveyJsPhpSdk\Model\Element\AbstractSurveyElementModel;
+use SurveyJsPhpSdk\Model\Element\CheckboxElement;
+use SurveyJsPhpSdk\Model\Element\CommentElement;
+use SurveyJsPhpSdk\Model\Element\RadiogroupElement;
+use SurveyJsPhpSdk\Model\Element\RatingElement;
 
 class SurveyElementParser
 {
     /**
      * @param array $elements
      *
-     * @return SurveyElementModel[]
+     * @throws UnknownElementTypeException
+     *
+     * @return AbstractSurveyElementModel[]
      */
     public static function parseToModel(array $elements): array
     {
@@ -20,23 +29,10 @@ class SurveyElementParser
 
         foreach($elements as $element){
 
-            $elementModel = new SurveyElementModel();
+            $elementModel = ElementModelFactory::getModel($element->type);
+            $parser = 'parse' . (new \ReflectionClass($elementModel))->getShortName();
 
-            switch($element->type){
-                case 'rating':
-                    $elementModel = self::parseRatingElement($element);
-                    break;
-
-                case 'radiogroup':
-                    $elementModel = self::parseRadiogroupElement($element);
-                    break;
-
-                case 'checkbox':
-                    $elementModel = self::parseCheckboxElement($element);
-                    break;
-            }
-
-            $elementModel->setType($element->type);
+            $elementModel = self::$parser($elementModel, $element);
 
             if(isset($element->name)){
                 $elementModel->setName($element->name);
@@ -64,10 +60,14 @@ class SurveyElementParser
         return $elementsModels;
     }
 
-    private static function parseRatingElement(\stdClass $element): SurveyElementModel
+    /**
+     * @param RatingElement $model
+     * @param \stdClass $element
+     *
+     * @return AbstractChoiceElementModel
+     */
+    private static function parseRatingElement(RatingElement $model, \stdClass $element): AbstractChoiceElementModel
     {
-        $rating = new SurveyElementModel();
-
         $choicesData = [];
 
         if ( ! isset($element->rateValues)) {
@@ -90,32 +90,51 @@ class SurveyElementParser
             }
         }
 
-        return $rating->setChoices(SurveyChoiceParser::parseToModel($choicesData));
+        return $model->setChoices(SurveyChoiceParser::parseToModel($choicesData));
     }
 
-    private static function parseRadiogroupElement(\stdClass $element): SurveyElementModel
+    /**
+     * @param RadiogroupElement $model
+     * @param \stdClass $element
+     *
+     * @return AbstractChoiceElementModel
+     */
+    private static function parseRadiogroupElement(RadiogroupElement $model, \stdClass $element): AbstractChoiceElementModel
     {
-        $radiogroup = new SurveyElementModel();
-
         $choicesData = [];
 
         foreach ($element->choices as $value) {
             $choicesData[] = ! is_object($value) ? (object)['text' => $value, 'value' => $value] : $value;
         }
 
-        return $radiogroup->setChoices(SurveyChoiceParser::parseToModel($choicesData));
+        return $model->setChoices(SurveyChoiceParser::parseToModel($choicesData));
     }
 
-    private static function parseCheckboxElement(\stdClass $element): SurveyElementModel
+    /**
+     * @param CheckboxElement $model
+     * @param \stdClass $element
+     *
+     * @return CheckboxElement
+     */
+    private static function parseCheckboxElement(CheckboxElement $model, \stdClass $element): AbstractChoiceElementModel
     {
-        $checkbox = new SurveyElementModel();
-
         $choicesData = [];
 
         foreach ($element->choices as $value) {
             $choicesData[] = ! is_object($value) ? (object)['text' => $value, 'value' => $value] : $value;
         }
 
-        return $checkbox->setChoices(SurveyChoiceParser::parseToModel($choicesData));
+        return $model->setChoices(SurveyChoiceParser::parseToModel($choicesData));
+    }
+
+    /**
+     * @param CommentElement $model
+     * @param \stdClass $element
+     *
+     * @return AbstractSurveyElementModel
+     */
+    private static function parseCommentElement(CommentElement $model, \stdClass $element): AbstractSurveyElementModel
+    {
+        return $model;
     }
 }

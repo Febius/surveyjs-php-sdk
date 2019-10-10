@@ -4,12 +4,14 @@
 namespace SurveyJsPhpSdk\Model;
 
 
+use SurveyJsPhpSdk\Model\Element\AbstractSurveyElementModel;
+
 class SurveyPageModel
 {
     /** @var string */
     private $name;
 
-    /** @var SurveyElementModel[] */
+    /** @var AbstractSurveyElementModel[] */
     private $elements;
 
     /**
@@ -21,11 +23,11 @@ class SurveyPageModel
     }
 
     /**
-     * @param $name
+     * @param string $name
      *
      * @return SurveyPageModel
      */
-    public function setName($name): self
+    public function setName(string $name): self
     {
         $this->name = $name;
 
@@ -33,7 +35,7 @@ class SurveyPageModel
     }
 
     /**
-     * @return SurveyElementModel[]
+     * @return AbstractSurveyElementModel[]
      */
     public function getElements(): array
     {
@@ -41,11 +43,11 @@ class SurveyPageModel
     }
 
     /**
-     * @param $elements
+     * @param AbstractSurveyElementModel[] $elements
      *
      * @return SurveyPageModel
      */
-    public function setElements($elements): self
+    public function setElements(array $elements): self
     {
         $this->elements = $elements;
 

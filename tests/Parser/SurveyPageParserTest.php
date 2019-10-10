@@ -6,7 +6,8 @@ namespace SurveyJsPhpSdk\Tests\Parser;
 
 use PHPUnit\Framework\TestCase;
 use SurveyJsPhpSdk\Exception\ElementPropertyNotFoundException;
-use SurveyJsPhpSdk\Model\SurveyElementModel;
+use SurveyJsPhpSdk\Factory\ElementModelFactory;
+use SurveyJsPhpSdk\Model\Element\AbstractSurveyElementModel;
 use SurveyJsPhpSdk\Model\SurveyPageModel;
 use SurveyJsPhpSdk\Parser\SurveyPageParser;
 
@@ -26,14 +27,14 @@ class SurveyPageParserTest extends TestCase
         $this->testCaseFail[] = $fail;
 
         $element1 = (object)[
-            'type'         => 'text',
+            'type'         => ElementModelFactory::COMMENT_TYPE,
             'name'         => 'element_1',
             'title'        => 'Element 1',
             'isRequired'   => true,
         ];
 
         $element2 = (object)[
-            'type'         => 'text',
+            'type'         => ElementModelFactory::COMMENT_TYPE,
             'name'         => 'element_2',
             'title'        => 'Element 2',
             'isRequired'   => true,
@@ -60,7 +61,7 @@ class SurveyPageParserTest extends TestCase
             $this->assertEquals($page->name, $models[$index]->getName());
 
             foreach($models[$index]->getElements() as $element){
-                $this->assertInstanceOf(SurveyElementModel::class, $element);
+                $this->assertInstanceOf(AbstractSurveyElementModel::class, $element);
             }
         }
     }

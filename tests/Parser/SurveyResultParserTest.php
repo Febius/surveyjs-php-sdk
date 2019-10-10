@@ -37,7 +37,7 @@ class SurveyResultParserTest extends TestCase
                       "choicesOrder": "asc"
                     },
                     {
-                      "type": "radiogroup",
+                      "type": "checkbox",
                       "name": "question2",
                       "title": "Second Question",
                       "choices": [
@@ -64,20 +64,10 @@ class SurveyResultParserTest extends TestCase
                       "enableIf": "{question2} notempty"
                     },
                     {
-                      "type": "radiogroup",
+                      "type": "rating",
                       "name": "question4",
                       "title": "Fourth Question",
-                      "choices": [
-                        {
-                          "value": "1",
-                          "text": "yes"
-                        },
-                        {
-                          "value": "2",
-                          "text": "no"
-                        }
-                      ],
-                      "choicesOrder": "asc"
+                      "rateMax": 6
                     }
                   ]
                 }
