@@ -4,10 +4,14 @@ namespace SurveyJsPhpSdk\Model;
 
 class SurveyChoiceModel
 {
-    /** @var string */
+    /**
+     * @var string 
+     */
     private $value;
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     private $text;
 
     /**

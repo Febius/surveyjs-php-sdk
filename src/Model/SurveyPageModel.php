@@ -8,10 +8,14 @@ use SurveyJsPhpSdk\Model\Element\AbstractSurveyElementModel;
 
 class SurveyPageModel
 {
-    /** @var string */
+    /**
+     * @var string 
+     */
     private $name;
 
-    /** @var AbstractSurveyElementModel[] */
+    /**
+     * @var AbstractSurveyElementModel[] 
+     */
     private $elements;
 
     /**

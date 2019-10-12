@@ -10,10 +10,14 @@ use SurveyJsPhpSdk\Model\SurveyResultModel;
 abstract class AbstractChoiceElementModel extends AbstractSurveyElementModel
 {
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     private $choicesOrder;
 
-    /** @var SurveyChoiceModel[] */
+    /**
+     * @var SurveyChoiceModel[] 
+     */
     private $choices;
 
     /**
@@ -63,11 +67,13 @@ abstract class AbstractChoiceElementModel extends AbstractSurveyElementModel
      */
     public function isValidResult(SurveyResultModel $result): bool
     {
-        if(parent::isValidResult($result)){
+        if(parent::isValidResult($result)) {
 
-            /** @var SurveyChoiceModel $choice */
+            /**
+ * @var SurveyChoiceModel $choice 
+*/
             foreach($this->getChoices() as $choice){
-                if($choice->getValue() === $result->getAnswer()){
+                if($choice->getValue() === $result->getAnswer()) {
                     return true;
                 }
             }

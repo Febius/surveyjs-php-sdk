@@ -34,23 +34,23 @@ class SurveyElementParser
 
             $elementModel = self::$parser($elementModel, $element);
 
-            if(isset($element->name)){
+            if(isset($element->name)) {
                 $elementModel->setName($element->name);
             }
 
-            if(isset($element->title)){
+            if(isset($element->title)) {
                 $elementModel->setTitle($element->title);
             }
 
-            if(isset($element->isRequired)){
+            if(isset($element->isRequired)) {
                 $elementModel->setIsRequired($element->isRequired);
             }
 
-            if(isset($element->choicesOrder)){
+            if(isset($element->choicesOrder)) {
                 $elementModel->setChoicesOrder($element->choicesOrder);
             }
 
-            if(isset($element->enableIf)){
+            if(isset($element->enableIf)) {
                 $elementModel->setEnableIf($element->enableIf);
             }
 
@@ -62,7 +62,7 @@ class SurveyElementParser
 
     /**
      * @param RatingElement $model
-     * @param \stdClass $element
+     * @param \stdClass     $element
      *
      * @return AbstractChoiceElementModel
      */
@@ -70,7 +70,7 @@ class SurveyElementParser
     {
         $choicesData = [];
 
-        if ( ! isset($element->rateValues)) {
+        if (! isset($element->rateValues)) {
             $max = 5;
 
             if (isset($element->rateMax)) {
@@ -95,7 +95,7 @@ class SurveyElementParser
 
     /**
      * @param RadiogroupElement $model
-     * @param \stdClass $element
+     * @param \stdClass         $element
      *
      * @return AbstractChoiceElementModel
      */
@@ -112,7 +112,7 @@ class SurveyElementParser
 
     /**
      * @param CheckboxElement $model
-     * @param \stdClass $element
+     * @param \stdClass       $element
      *
      * @return AbstractChoiceElementModel
      */
@@ -129,7 +129,7 @@ class SurveyElementParser
 
     /**
      * @param CommentElement $model
-     * @param \stdClass $element
+     * @param \stdClass      $element
      *
      * @return AbstractSurveyElementModel
      */

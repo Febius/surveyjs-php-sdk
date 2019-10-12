@@ -5,19 +5,29 @@ namespace SurveyJsPhpSdk\Model;
 class SurveyTemplateModel
 {
 
-    /** @var SurveyPageModel[] */
+    /**
+     * @var SurveyPageModel[] 
+     */
     private $pages;
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     private $showNavigationButtons;
 
-    /** @var boolean */
+    /**
+     * @var boolean 
+     */
     private $showPageTitles;
 
-    /** @var boolean */
+    /**
+     * @var boolean 
+     */
     private $showCompletedPage;
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     private $showQuestionNumbers;
 
     /**
