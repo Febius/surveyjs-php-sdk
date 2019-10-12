@@ -6,6 +6,7 @@ namespace SurveyJsPhpSdk\Parser;
 
 use SurveyJsPhpSdk\Exception\ElementPropertyNotFoundException;
 use SurveyJsPhpSdk\Exception\PagePropertyNotFoundException;
+use SurveyJsPhpSdk\Exception\UnknownElementTypeException;
 use SurveyJsPhpSdk\Model\SurveyTemplateModel;
 
 class SurveyTemplateParser
@@ -13,8 +14,9 @@ class SurveyTemplateParser
     /**
      * @param string $jsonTemplate
      *
-     * @throws PagePropertyNotFoundException
      * @throws ElementPropertyNotFoundException
+     * @throws PagePropertyNotFoundException
+     * @throws UnknownElementTypeException
      *
      * @return SurveyTemplateModel
      */
@@ -44,7 +46,9 @@ class SurveyTemplateParser
             $surveyTemplateModel->setShowQuestionNumbers($decodedTemplate->showQuestionNumbers);
         }
 
-        $surveyTemplateModel->setPages(SurveyPageParser::parseToModel($decodedTemplate->pages));
+        foreach($decodedTemplate->pages as $page){
+            $surveyTemplateModel->addPage(SurveyPageParser::parseToModel($page));
+        }
 
         return $surveyTemplateModel;
     }

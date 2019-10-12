@@ -5,8 +5,8 @@ namespace SurveyJsPhpSdk\Tests\Model;
 
 
 use PHPUnit\Framework\TestCase;
-use SurveyJsPhpSdk\Factory\ElementModelFactory;
 use SurveyJsPhpSdk\Model\Element\AbstractSurveyElementModel;
+use SurveyJsPhpSdk\Model\Element\RatingElement;
 use SurveyJsPhpSdk\Model\SurveyChoiceModel;
 use SurveyJsPhpSdk\Model\SurveyResultModel;
 
@@ -20,7 +20,7 @@ class RatingElementTest extends TestCase
 
     protected function setUp()
     {
-        $this->rating = ElementModelFactory::getModel(ElementModelFactory::RATING_TYPE);
+        $this->rating = new RatingElement();
         $this->rating->setName('Great rating question');
 
         $choice1 = new SurveyChoiceModel();
@@ -28,7 +28,8 @@ class RatingElementTest extends TestCase
         $choice2 = new SurveyChoiceModel();
         $choice2->setText('2')->setValue('2');
 
-        $this->rating->setChoices([$choice1, $choice2]);
+        $this->rating->addChoice($choice1);
+        $this->rating->addChoice($choice2);
     }
 
     public function testIsValidResult()

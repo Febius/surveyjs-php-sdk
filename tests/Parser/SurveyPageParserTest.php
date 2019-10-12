@@ -5,36 +5,34 @@ namespace SurveyJsPhpSdk\Tests\Parser;
 
 
 use PHPUnit\Framework\TestCase;
+use SurveyJsPhpSdk\Enum\ElementEnum;
 use SurveyJsPhpSdk\Exception\ElementPropertyNotFoundException;
-use SurveyJsPhpSdk\Factory\ElementModelFactory;
 use SurveyJsPhpSdk\Model\Element\AbstractSurveyElementModel;
 use SurveyJsPhpSdk\Model\SurveyPageModel;
 use SurveyJsPhpSdk\Parser\SurveyPageParser;
 
 class SurveyPageParserTest extends TestCase
 {
-
-    private $testCaseFail = [];
+    /** @var \stdClass */
+    private $testCaseFail;
 
     private $testCaseSuccess = [];
 
     protected function setUp()
     {
-        $fail = (object) [
+        $this->testCaseFail = (object) [
             'name' => 'page 1'
         ];
 
-        $this->testCaseFail[] = $fail;
-
         $element1 = (object)[
-            'type'         => ElementModelFactory::COMMENT_TYPE,
+            'type'         => ElementEnum::COMMENT_TYPE,
             'name'         => 'element_1',
             'title'        => 'Element 1',
             'isRequired'   => true,
         ];
 
         $element2 = (object)[
-            'type'         => ElementModelFactory::COMMENT_TYPE,
+            'type'         => ElementEnum::COMMENT_TYPE,
             'name'         => 'element_2',
             'title'        => 'Element 2',
             'isRequired'   => true,
@@ -54,13 +52,13 @@ class SurveyPageParserTest extends TestCase
     }
 
     public function testParseToModel(){
-        $models = SurveyPageParser::parseToModel($this->testCaseSuccess);
 
         foreach($this->testCaseSuccess as $index => $page){
-            $this->assertInstanceOf(SurveyPageModel::class, $models[$index]);
-            $this->assertEquals($page->name, $models[$index]->getName());
+            $model = SurveyPageParser::parseToModel($page);
+            $this->assertInstanceOf(SurveyPageModel::class, $model);
+            $this->assertEquals($page->name, $model->getName());
 
-            foreach($models[$index]->getElements() as $element){
+            foreach($model->getElements() as $element){
                 $this->assertInstanceOf(AbstractSurveyElementModel::class, $element);
             }
         }

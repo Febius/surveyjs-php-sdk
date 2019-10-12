@@ -5,35 +5,33 @@ namespace SurveyJsPhpSdk\Parser;
 
 
 use SurveyJsPhpSdk\Exception\ElementPropertyNotFoundException;
+use SurveyJsPhpSdk\Exception\UnknownElementTypeException;
 use SurveyJsPhpSdk\Model\SurveyPageModel;
 
 class SurveyPageParser
 {
     /**
-     * @param array $pages
+     * @param \stdClass $page
      *
      * @throws ElementPropertyNotFoundException
+     * @throws UnknownElementTypeException
      *
-     * @return SurveyPageModel[]
+     * @return SurveyPageModel
      */
-    public static function parseToModel(array $pages): array
+    public static function parseToModel(\stdClass $page): SurveyPageModel
     {
-        $pagesModels = [];
+        $pageModel = new SurveyPageModel();
 
-        foreach($pages as $page){
-            $pageModel = new SurveyPageModel();
+        $pageModel->setName($page->name);
 
-            $pageModel->setName($page->name);
-
-            if(!isset($page->elements)) {
-                throw new ElementPropertyNotFoundException();
-            }
-
-            $pageModel->setElements(SurveyElementParser::parseToModel($page->elements));
-
-            $pagesModels[] = $pageModel;
+        if(!isset($page->elements)) {
+            throw new ElementPropertyNotFoundException();
         }
 
-        return $pagesModels;
+        foreach($page->elements as $element){
+            $pageModel->addElement(SurveyElementParser::parseToModel($element));
+        }
+
+        return $pageModel;
     }
 }

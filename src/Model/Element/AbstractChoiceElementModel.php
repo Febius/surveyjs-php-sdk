@@ -18,7 +18,7 @@ abstract class AbstractChoiceElementModel extends AbstractSurveyElementModel
     /**
      * @var SurveyChoiceModel[] 
      */
-    private $choices;
+    private $choices = [];
 
     /**
      * @return string
@@ -49,13 +49,36 @@ abstract class AbstractChoiceElementModel extends AbstractSurveyElementModel
     }
 
     /**
-     * @param SurveyChoiceModel[] $choices
+     * @param SurveyChoiceModel $choiceToAdd
      *
      * @return AbstractChoiceElementModel
      */
-    public function setChoices(array $choices): self
+    public function addChoice(SurveyChoiceModel $choiceToAdd): self
     {
-        $this->choices = $choices;
+        foreach($this->choices as $choice){
+            if($choice->getValue() === $choiceToAdd->getValue()) {
+                return $this;
+            }
+        }
+
+        $this->choices[] = $choiceToAdd;
+
+        return $this;
+    }
+
+    /**
+     * @param SurveyChoiceModel $choiceToRemove
+     *
+     * @return AbstractChoiceElementModel
+     */
+    public function removeChoice(SurveyChoiceModel $choiceToRemove): self
+    {
+        foreach($this->choices as $index => $choice){
+            if($choice->getValue() === $choiceToRemove->getValue()) {
+                unset($this->choices[$index]);
+                return $this;
+            }
+        }
 
         return $this;
     }
@@ -70,8 +93,8 @@ abstract class AbstractChoiceElementModel extends AbstractSurveyElementModel
         if(parent::isValidResult($result)) {
 
             /**
- * @var SurveyChoiceModel $choice 
-*/
+             * @var SurveyChoiceModel $choice
+             */
             foreach($this->getChoices() as $choice){
                 if($choice->getValue() === $result->getAnswer()) {
                     return true;

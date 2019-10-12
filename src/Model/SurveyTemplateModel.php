@@ -8,7 +8,7 @@ class SurveyTemplateModel
     /**
      * @var SurveyPageModel[] 
      */
-    private $pages;
+    private $pages = [];
 
     /**
      * @var string 
@@ -39,13 +39,36 @@ class SurveyTemplateModel
     }
 
     /**
-     * @param SurveyPageModel[] $pages
+     * @param SurveyPageModel $pageToAdd
      *
      * @return SurveyTemplateModel
      */
-    public function setPages(array $pages): self
+    public function addPage(SurveyPageModel $pageToAdd): self
     {
-        $this->pages = $pages;
+        foreach($this->pages as $page){
+            if($page->getName() === $pageToAdd->getName()) {
+                return $this;
+            }
+        }
+
+        $this->pages[] = $pageToAdd;
+
+        return $this;
+    }
+
+    /**
+     * @param SurveyPageModel $pageToRemove
+     *
+     * @return SurveyTemplateModel
+     */
+    public function removePage(SurveyPageModel $pageToRemove): self
+    {
+        foreach($this->pages as $index => $page){
+            if($page->getName() === $pageToRemove->getName()) {
+                unset($this->pages[$index]);
+                return $this;
+            }
+        }
 
         return $this;
     }
