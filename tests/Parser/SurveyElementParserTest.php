@@ -5,20 +5,30 @@ namespace SurveyJsPhpSdk\Tests\Parser;
 
 
 use PHPUnit\Framework\TestCase;
+use SurveyJsPhpSdk\Enum\ElementEnum;
+use SurveyJsPhpSdk\Exception\UnknownElementTypeException;
 use SurveyJsPhpSdk\Factory\ElementModelFactory;
 use SurveyJsPhpSdk\Model\Element\AbstractSurveyElementModel;
+use SurveyJsPhpSdk\Model\Element\CheckboxElement;
+use SurveyJsPhpSdk\Model\Element\CommentElement;
+use SurveyJsPhpSdk\Model\Element\RadiogroupElement;
+use SurveyJsPhpSdk\Model\Element\RatingElement;
 use SurveyJsPhpSdk\Model\SurveyChoiceModel;
 use SurveyJsPhpSdk\Model\SurveyElementModel;
 use SurveyJsPhpSdk\Parser\SurveyElementParser;
 
 class SurveyElementParserTest extends TestCase
 {
+    /** @var array */
     private $elementsToParse = [];
+
+    /** @var \StdClass */
+    private $unknownElement;
 
     protected function setUp()
     {
         $element1 = (object)[
-            'type'         => ElementModelFactory::COMMENT_TYPE,
+            'type'         => ElementEnum::COMMENT_TYPE,
             'name'         => 'element_1',
             'title'        => 'Element 1',
             'isRequired'   => true,
@@ -36,7 +46,7 @@ class SurveyElementParserTest extends TestCase
         ];
 
         $element2 = (object)[
-            'type'         => ElementModelFactory::RADIOGROUP_TYPE,
+            'type'         => ElementEnum::RADIOGROUP_TYPE,
             'name'         => 'element_2',
             'title'        => 'Element 2',
             'isRequired'   => false,
@@ -46,7 +56,7 @@ class SurveyElementParserTest extends TestCase
         ];
 
         $element3 = (object)[
-            'type'         => ElementModelFactory::RATING_TYPE,
+            'type'         => ElementEnum::RATING_TYPE,
             'name'         => 'element_3',
             'title'        => 'Element 3',
             'isRequired'   => false,
@@ -55,7 +65,7 @@ class SurveyElementParserTest extends TestCase
         ];
 
         $element4 = (object)[
-            'type'         => ElementModelFactory::RATING_TYPE,
+            'type'         => ElementEnum::RATING_TYPE,
             'name'         => 'element_3',
             'title'        => 'Element 3',
             'isRequired'   => false,
@@ -65,13 +75,17 @@ class SurveyElementParserTest extends TestCase
                 '2',
                 '3',
                 '4',
-                $choice2
+                '5',
+                (object)[
+                    'text'  => 'choice 6',
+                    'value' => '6'
+                ]
             ],
             'rateMax'      => 6
         ];
 
         $element5 = (object)[
-            'type'         => ElementModelFactory::CHECKBOX_TYPE,
+            'type'         => ElementEnum::CHECKBOX_TYPE,
             'name'         => 'element_2',
             'title'        => 'Element 2',
             'isRequired'   => false,
@@ -81,23 +95,52 @@ class SurveyElementParserTest extends TestCase
         ];
 
         $this->elementsToParse = [$element1, $element2, $element3, $element4, $element5];
+
+        $this->unknownElement = (object)[
+            'type'         => 'unknown_element',
+            'name'         => 'element_2',
+            'title'        => 'Element 2',
+            'isRequired'   => false,
+            'choicesOrder' => 'desc',
+            'enableIf'     => 'implausible conditions',
+            'choices'      => [$choice1, $choice2, 'item3']
+        ];
     }
 
     public function testParseToModel(){
-        $models = SurveyElementParser::parseToModel($this->elementsToParse);
 
         foreach($this->elementsToParse as $index => $element){
-            $this->assertInstanceOf(ElementModelFactory::TYPE_TO_CLASS_MAP[$element->type], $models[$index]);
-            $this->assertEquals($element->name, $models[$index]->getName());
-            $this->assertEquals($element->title, $models[$index]->getTitle());
-            $this->assertEquals($element->isRequired, $models[$index]->isRequired());
+            $model = SurveyElementParser::parseToModel($element);
+            $this->assertEquals($element->name, $model->getName());
+            $this->assertEquals($element->title, $model->getTitle());
+            $this->assertEquals($element->isRequired, $model->isRequired());
+            $this->assertEquals($element->enableIf, $model->getEnableIf());
 
-            if(in_array($element->type, [ElementModelFactory::RADIOGROUP_TYPE, ElementModelFactory::RATING_TYPE, ElementModelFactory::CHECKBOX_TYPE])){
+            if(isset($element->choicesOrder)){
+                $this->assertEquals($element->choicesOrder, $model->getChoicesOrder());
+            }
 
-                foreach($models[$index]->getChoices() as $choice){
-                    $this->assertInstanceOf(SurveyChoiceModel::class, $choice);
-                }
+            switch($element->type){
+                case ElementEnum::COMMENT_TYPE:
+                    $this->assertInstanceOf(CommentElement::class, $model);
+                    break;
+                case ElementEnum::CHECKBOX_TYPE:
+                    $this->assertInstanceOf(CheckboxElement::class, $model);
+                    break;
+                case ElementEnum::RADIOGROUP_TYPE:
+                    $this->assertInstanceOf(RadiogroupElement::class, $model);
+                    break;
+                case ElementEnum::RATING_TYPE:
+                    $this->assertInstanceOf(RatingElement::class, $model);
+                    break;
             }
         }
+    }
+
+    public function parseToModelRaiseException()
+    {
+        $this->expectException(UnknownElementTypeException::class);
+
+        SurveyElementParser::parseToModel($this->unknownElement);
     }
 }

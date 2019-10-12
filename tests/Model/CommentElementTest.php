@@ -5,21 +5,20 @@ namespace SurveyJsPhpSdk\Tests\Model;
 
 
 use PHPUnit\Framework\TestCase;
-use SurveyJsPhpSdk\Factory\ElementModelFactory;
-use SurveyJsPhpSdk\Model\Element\AbstractSurveyElementModel;
+use SurveyJsPhpSdk\Model\Element\CommentElement;
 use SurveyJsPhpSdk\Model\SurveyResultModel;
 
 class CommentElementTest extends TestCase
 {
 
     /**
-     * @var AbstractSurveyElementModel
+     * @var CommentElement
      */
     private $comment;
 
     protected function setUp()
     {
-        $this->comment = ElementModelFactory::getModel(ElementModelFactory::COMMENT_TYPE);
+        $this->comment = new CommentElement();
         $this->comment->setName('Great question');
     }
 

@@ -10,24 +10,17 @@ class SurveyChoiceParser
 {
 
     /**
-     * @param array $choices
+     * @param \stdClass $choice
      *
-     * @return SurveyChoiceModel[]
+     * @return SurveyChoiceModel
      */
-    public static function parseToModel(array $choices): array
+    public static function parseToModel(\stdClass $choice): SurveyChoiceModel
     {
-        $choicesModels = [];
+        $choiceModel = new SurveyChoiceModel();
 
-        foreach($choices as $choice){
-            $choiceModel = new SurveyChoiceModel();
+        $choiceModel->setText($choice->text);
+        $choiceModel->setValue($choice->value);
 
-            $choiceModel->setText($choice->text);
-
-            $choiceModel->setValue($choice->value);
-
-            $choicesModels[] = $choiceModel;
-        }
-
-        return $choicesModels;
+        return $choiceModel;
     }
 }

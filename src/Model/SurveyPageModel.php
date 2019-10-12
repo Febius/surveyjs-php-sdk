@@ -16,7 +16,7 @@ class SurveyPageModel
     /**
      * @var AbstractSurveyElementModel[] 
      */
-    private $elements;
+    private $elements = [];
 
     /**
      * @return string
@@ -47,13 +47,36 @@ class SurveyPageModel
     }
 
     /**
-     * @param AbstractSurveyElementModel[] $elements
+     * @param AbstractSurveyElementModel $elementToAdd
      *
      * @return SurveyPageModel
      */
-    public function setElements(array $elements): self
+    public function addElement(AbstractSurveyElementModel $elementToAdd): self
     {
-        $this->elements = $elements;
+        foreach($this->elements as $element){
+            if($element->getName() === $elementToAdd->getName()) {
+                return $this;
+            }
+        }
+
+        $this->elements[] = $elementToAdd;
+
+        return $this;
+    }
+
+    /**
+     * @param AbstractSurveyElementModel $elementToRemove
+     *
+     * @return SurveyPageModel
+     */
+    public function removeElement(AbstractSurveyElementModel $elementToRemove): self
+    {
+        foreach($this->elements as $index => $element){
+            if($element->getName() === $elementToRemove->getName()) {
+                unset($this->elements[$index]);
+                return $this;
+            }
+        }
 
         return $this;
     }
