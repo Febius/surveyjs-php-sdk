@@ -37,7 +37,7 @@ class ElementModelFactory
      */
     public static function getModel(string $type): AbstractSurveyElementModel
     {
-        if(!in_array($type, self::ELEMENT_TYPES)){
+        if(!in_array($type, self::ELEMENT_TYPES)) {
             throw new UnknownElementTypeException();
         }
 

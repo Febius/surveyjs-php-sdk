@@ -9,16 +9,24 @@ use SurveyJsPhpSdk\Model\SurveyResultModel;
 abstract class AbstractSurveyElementModel
 {
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     private $name;
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     private $title;
 
-    /** @var boolean */
+    /**
+     * @var boolean 
+     */
     private $required;
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     private $enableIf;
 
     /**

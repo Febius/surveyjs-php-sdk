@@ -25,7 +25,7 @@ class SurveyPageParser
 
             $pageModel->setName($page->name);
 
-            if(!isset($page->elements)){
+            if(!isset($page->elements)) {
                 throw new ElementPropertyNotFoundException();
             }
 

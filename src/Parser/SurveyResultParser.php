@@ -16,7 +16,7 @@ class SurveyResultParser
 
     /**
      * @param SurveyTemplateModel $survey
-     * @param string $jsonResults
+     * @param string              $jsonResults
      *
      * @throws InvalidSurveyResultException
      *
@@ -34,7 +34,7 @@ class SurveyResultParser
             $resultModel->setQuestion($question);
             $resultModel->setAnswer($result);
 
-            if(!self::validateResult($survey->getPages(), $resultModel)){
+            if(!self::validateResult($survey->getPages(), $resultModel)) {
                 throw new InvalidSurveyResultException();
             }
 
@@ -52,11 +52,15 @@ class SurveyResultParser
      */
     private static function validateResult(array $pages, SurveyResultModel $result): bool
     {
-        /** @var SurveyPageModel $page */
+        /**
+         * @var SurveyPageModel $page
+        */
         foreach($pages as $page){
-            /** @var AbstractSurveyElementModel $element */
+            /**
+             * @var AbstractSurveyElementModel $element
+            */
             foreach($page->getElements() as $element){
-                if($element->isValidResult($result)){
+                if($element->isValidResult($result)) {
                     return true;
                 }
             }

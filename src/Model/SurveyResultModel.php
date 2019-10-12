@@ -6,10 +6,14 @@ namespace SurveyJsPhpSdk\Model;
 
 class SurveyResultModel
 {
-    /** @var string */
+    /**
+     * @var string 
+     */
     private $question;
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     private $answer;
 
     /**
