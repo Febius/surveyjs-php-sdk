@@ -1,5 +1,5 @@
 {
-  "name": "Febius/surveyjs-php-sdk",
+  "name": "febius/surveyjs-php-sdk",
   "description": "Survey Js JSON schema parser and modelling sdk",
   "license": "MIT",
   "version": "0.1.0",
