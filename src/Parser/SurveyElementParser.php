@@ -4,7 +4,9 @@
 namespace SurveyJsPhpSdk\Parser;
 
 
+use SurveyJsPhpSdk\Configuration\CustomElementsConfiguration;
 use SurveyJsPhpSdk\Enum\ElementEnum;
+use SurveyJsPhpSdk\Exception\InvalidParsedCustomElementModelException;
 use SurveyJsPhpSdk\Exception\UnknownElementTypeException;
 use SurveyJsPhpSdk\Model\Element\AbstractSurveyElementModel;
 use SurveyJsPhpSdk\Model\Element\CommentElement;
@@ -15,13 +17,15 @@ use SurveyJsPhpSdk\Parser\Element\RatingParser;
 class SurveyElementParser
 {
     /**
-     * @param \stdClass $element
+     * @param \stdClass                        $element
+     * @param CustomElementsConfiguration|null $configuration
      *
+     * @throws InvalidParsedCustomElementModelException
      * @throws UnknownElementTypeException
      *
      * @return AbstractSurveyElementModel
      */
-    public static function parseToModel(\stdClass $element): AbstractSurveyElementModel
+    public static function parseToModel(\stdClass $element, ?CustomElementsConfiguration $configuration = null): AbstractSurveyElementModel
     {
 
             switch($element->type){
@@ -42,7 +46,19 @@ class SurveyElementParser
                     break;
 
                 default:
-                    throw new UnknownElementTypeException($element->type);
+                    if(null === $config = $configuration->getConfigByType($element->type)) {
+                        throw new UnknownElementTypeException($element->type);
+                    }
+
+                    $parser = $config->getParser();
+
+                    $elementModel = $parser::parseToModel($element);
+
+                    $model = $config->getModel();
+
+                    if(! $elementModel instanceof $model) {
+                        throw new InvalidParsedCustomElementModelException();
+                    }
             }
 
             if(isset($element->name)) {
