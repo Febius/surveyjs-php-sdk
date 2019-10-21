@@ -4,7 +4,9 @@
 namespace SurveyJsPhpSdk\Parser;
 
 
+use SurveyJsPhpSdk\Configuration\CustomElementsConfiguration;
 use SurveyJsPhpSdk\Exception\ElementPropertyNotFoundException;
+use SurveyJsPhpSdk\Exception\InvalidParsedCustomElementModelException;
 use SurveyJsPhpSdk\Exception\PagePropertyNotFoundException;
 use SurveyJsPhpSdk\Exception\UnknownElementTypeException;
 use SurveyJsPhpSdk\Model\SurveyTemplateModel;
@@ -12,15 +14,17 @@ use SurveyJsPhpSdk\Model\SurveyTemplateModel;
 class SurveyTemplateParser
 {
     /**
-     * @param string $jsonTemplate
+     * @param string                           $jsonTemplate
+     * @param CustomElementsConfiguration|null $configuration
      *
      * @throws ElementPropertyNotFoundException
      * @throws PagePropertyNotFoundException
      * @throws UnknownElementTypeException
+     * @throws InvalidParsedCustomElementModelException
      *
      * @return SurveyTemplateModel
      */
-    public static function parseToModel(string $jsonTemplate): SurveyTemplateModel
+    public static function parseToModel(string $jsonTemplate, ?CustomElementsConfiguration $configuration = null): SurveyTemplateModel
     {
         $decodedTemplate = json_decode($jsonTemplate);
 
@@ -47,7 +51,7 @@ class SurveyTemplateParser
         }
 
         foreach($decodedTemplate->pages as $page){
-            $surveyTemplateModel->addPage(SurveyPageParser::parseToModel($page));
+            $surveyTemplateModel->addPage(SurveyPageParser::parseToModel($page, $configuration));
         }
 
         return $surveyTemplateModel;
