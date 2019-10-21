@@ -6,7 +6,7 @@ namespace SurveyJsPhpSdk\Model\Element;
 
 use SurveyJsPhpSdk\Model\SurveyResultModel;
 
-abstract class AbstractSurveyElementModel
+abstract class AbstractSurveyElementModel implements BaseSurveyElementModel
 {
 
     /**

@@ -5,6 +5,7 @@ namespace SurveyJsPhpSdk\Model;
 
 
 use SurveyJsPhpSdk\Model\Element\AbstractSurveyElementModel;
+use SurveyJsPhpSdk\Model\Element\BaseSurveyElementModel;
 
 class SurveyPageModel
 {
@@ -39,7 +40,7 @@ class SurveyPageModel
     }
 
     /**
-     * @return AbstractSurveyElementModel[]
+     * @return BaseSurveyElementModel[]
      */
     public function getElements(): array
     {
@@ -47,11 +48,11 @@ class SurveyPageModel
     }
 
     /**
-     * @param AbstractSurveyElementModel $elementToAdd
+     * @param BaseSurveyElementModel $elementToAdd
      *
      * @return SurveyPageModel
      */
-    public function addElement(AbstractSurveyElementModel $elementToAdd): self
+    public function addElement(BaseSurveyElementModel $elementToAdd): self
     {
         foreach($this->elements as $element){
             if($element->getName() === $elementToAdd->getName()) {
@@ -65,11 +66,11 @@ class SurveyPageModel
     }
 
     /**
-     * @param AbstractSurveyElementModel $elementToRemove
+     * @param BaseSurveyElementModel $elementToRemove
      *
      * @return SurveyPageModel
      */
-    public function removeElement(AbstractSurveyElementModel $elementToRemove): self
+    public function removeElement(BaseSurveyElementModel $elementToRemove): self
     {
         foreach($this->elements as $index => $element){
             if($element->getName() === $elementToRemove->getName()) {

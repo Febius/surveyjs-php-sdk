@@ -20,7 +20,8 @@
   },
   "autoload": {
     "psr-4": {
-      "SurveyJsPhpSdk\\": "src"
+      "SurveyJsPhpSdk\\": "src",
+      "SurveyJsPhpSdk\\Tests\\": "tests"
     },
     "classmap": [
       "src/"

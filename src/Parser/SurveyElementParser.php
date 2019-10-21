@@ -9,7 +9,9 @@ use SurveyJsPhpSdk\Enum\ElementEnum;
 use SurveyJsPhpSdk\Exception\InvalidParsedCustomElementModelException;
 use SurveyJsPhpSdk\Exception\UnknownElementTypeException;
 use SurveyJsPhpSdk\Model\Element\AbstractSurveyElementModel;
+use SurveyJsPhpSdk\Model\Element\BaseSurveyElementModel;
 use SurveyJsPhpSdk\Model\Element\CommentElement;
+use SurveyJsPhpSdk\Model\Element\CustomElementModelInterface;
 use SurveyJsPhpSdk\Parser\Element\CheckboxParser;
 use SurveyJsPhpSdk\Parser\Element\RadiogroupParser;
 use SurveyJsPhpSdk\Parser\Element\RatingParser;
@@ -23,9 +25,9 @@ class SurveyElementParser
      * @throws InvalidParsedCustomElementModelException
      * @throws UnknownElementTypeException
      *
-     * @return AbstractSurveyElementModel
+     * @return BaseSurveyElementModel
      */
-    public static function parseToModel(\stdClass $element, ?CustomElementsConfiguration $configuration = null): AbstractSurveyElementModel
+    public static function parseToModel(\stdClass $element, ?CustomElementsConfiguration $configuration = null): BaseSurveyElementModel
     {
 
             switch($element->type){

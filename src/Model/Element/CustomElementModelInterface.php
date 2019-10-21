@@ -4,7 +4,7 @@
 namespace SurveyJsPhpSdk\Model\Element;
 
 
-interface CustomElementModelInterface
+interface CustomElementModelInterface extends BaseSurveyElementModel
 {
 
 }
