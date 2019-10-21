@@ -5,17 +5,18 @@ namespace SurveyJsPhpSdk\Tests\Parser;
 
 
 use PHPUnit\Framework\TestCase;
+use SurveyJsPhpSdk\Configuration\CustomElementsConfiguration;
 use SurveyJsPhpSdk\Enum\ElementEnum;
+use SurveyJsPhpSdk\Exception\InvalidParsedCustomElementModelException;
 use SurveyJsPhpSdk\Exception\UnknownElementTypeException;
-use SurveyJsPhpSdk\Factory\ElementModelFactory;
-use SurveyJsPhpSdk\Model\Element\AbstractSurveyElementModel;
 use SurveyJsPhpSdk\Model\Element\CheckboxElement;
 use SurveyJsPhpSdk\Model\Element\CommentElement;
 use SurveyJsPhpSdk\Model\Element\RadiogroupElement;
 use SurveyJsPhpSdk\Model\Element\RatingElement;
-use SurveyJsPhpSdk\Model\SurveyChoiceModel;
-use SurveyJsPhpSdk\Model\SurveyElementModel;
 use SurveyJsPhpSdk\Parser\SurveyElementParser;
+use SurveyJsPhpSdk\Tests\Fake\FakeCustomElementModel;
+use SurveyJsPhpSdk\Tests\Fake\FakeCustomElementParser;
+use SurveyJsPhpSdk\Tests\Fake\FakeCustomElementParserWrong;
 
 class SurveyElementParserTest extends TestCase
 {
@@ -24,6 +25,10 @@ class SurveyElementParserTest extends TestCase
 
     /** @var \StdClass */
     private $unknownElement;
+    /**
+     * @var object
+     */
+    private $customElement;
 
     protected function setUp()
     {
@@ -94,6 +99,11 @@ class SurveyElementParserTest extends TestCase
             'choices'      => [$choice1, $choice2, 'item3']
         ];
 
+        $this->customElement = (object)[
+            'type'         => 'custom_test_element_type',
+            'content'      => 'some content for the element'
+        ];
+
         $this->elementsToParse = [$element1, $element2, $element3, $element4, $element5];
 
         $this->unknownElement = (object)[
@@ -135,6 +145,25 @@ class SurveyElementParserTest extends TestCase
                     break;
             }
         }
+    }
+
+    public function testParseToModelWithCustomElement(){
+        $conf = new CustomElementsConfiguration();
+        $conf->addConfig('custom_test_element_type', FakeCustomElementModel::class, FakeCustomElementParser::class);
+
+        $model = SurveyElementParser::parseToModel($this->customElement, $conf);
+
+        $this->assertInstanceOf(FakeCustomElementModel::class, $model);
+    }
+
+    public function testParseToModelWithCustomElementRaiseException(){
+
+        $this->expectException(InvalidParsedCustomElementModelException::class);
+
+        $conf = new CustomElementsConfiguration();
+        $conf->addConfig('custom_test_element_type', FakeCustomElementModel::class, FakeCustomElementParserWrong::class);
+
+        SurveyElementParser::parseToModel($this->customElement, $conf);
     }
 
     public function parseToModelRaiseException()
