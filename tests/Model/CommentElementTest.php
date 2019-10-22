@@ -6,7 +6,7 @@ namespace SurveyJsPhpSdk\Tests\Model;
 
 use PHPUnit\Framework\TestCase;
 use SurveyJsPhpSdk\Model\Element\CommentElement;
-use SurveyJsPhpSdk\Model\SurveyResultModel;
+use SurveyJsPhpSdk\Model\ResultModel;
 
 class CommentElementTest extends TestCase
 {
@@ -24,7 +24,7 @@ class CommentElementTest extends TestCase
 
     public function testIsValidResult()
     {
-        $result = new SurveyResultModel();
+        $result = new ResultModel();
         $result->setQuestion('Great question');
         $result->setAnswer('A great response');
 
@@ -33,7 +33,7 @@ class CommentElementTest extends TestCase
 
     public function testIsNotValidResult()
     {
-        $result = new SurveyResultModel();
+        $result = new ResultModel();
         $result->setQuestion('Wrong question');
         $result->setAnswer('A great response');
 

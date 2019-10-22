@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use SurveyJsPhpSdk\Enum\ElementEnum;
 use SurveyJsPhpSdk\Model\Element\RatingElement;
 use SurveyJsPhpSdk\Model\SurveyChoiceModel;
-use SurveyJsPhpSdk\Parser\Element\RatingParser;
+use SurveyJsPhpSdk\Parser\Element\RatingElementParser;
 
 class RatingParserTest extends TestCase
 {
@@ -55,7 +55,7 @@ class RatingParserTest extends TestCase
     public function testParseToModel()
     {
         foreach($this->elements as $element){
-            $model = RatingParser::parseToModel($element);
+            $model = RatingElementParser::parseToModel($element);
 
             $this->assertInstanceOf(RatingElement::class, $model);
             $this->assertEquals($element->rateMax, count($model->getChoices()));

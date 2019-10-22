@@ -12,9 +12,9 @@ use SurveyJsPhpSdk\Model\Element\AbstractSurveyElementModel;
 use SurveyJsPhpSdk\Model\Element\BaseSurveyElementModel;
 use SurveyJsPhpSdk\Model\Element\CommentElement;
 use SurveyJsPhpSdk\Model\Element\CustomElementModelInterface;
-use SurveyJsPhpSdk\Parser\Element\CheckboxParser;
+use SurveyJsPhpSdk\Parser\Element\DefaultChoiceElementParser;
 use SurveyJsPhpSdk\Parser\Element\RadiogroupParser;
-use SurveyJsPhpSdk\Parser\Element\RatingParser;
+use SurveyJsPhpSdk\Parser\Element\RatingElementParser;
 
 class SurveyElementParser
 {
@@ -36,7 +36,7 @@ class SurveyElementParser
                     break;
 
                 case ElementEnum::CHECKBOX_TYPE:
-                    $elementModel = CheckboxParser::parseToModel($element);
+                    $elementModel = DefaultChoiceElementParser::parseToModel($element);
                     break;
 
                 case ElementEnum::RADIOGROUP_TYPE:
@@ -44,7 +44,7 @@ class SurveyElementParser
                     break;
 
                 case ElementEnum::RATING_TYPE:
-                    $elementModel = RatingParser::parseToModel($element);
+                    $elementModel = RatingElementParser::parseToModel($element);
                     break;
 
                 default:

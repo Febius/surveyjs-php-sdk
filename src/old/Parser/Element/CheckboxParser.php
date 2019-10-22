@@ -13,7 +13,7 @@ class CheckboxParser
      *
      * @return CheckboxElement
      */
-    public static function parseToModel(\stdClass $element): CheckboxElement
+    public function parseToModel(\stdClass $element): CheckboxElement
     {
         $checkboxModel = new CheckboxElement();
 

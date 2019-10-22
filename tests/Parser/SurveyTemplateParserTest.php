@@ -6,7 +6,7 @@ namespace SurveyJsPhpSdk\Tests\Parser;
 
 use PHPUnit\Framework\TestCase;
 use SurveyJsPhpSdk\Exception\PagePropertyNotFoundException;
-use SurveyJsPhpSdk\Model\SurveyPageModel;
+use SurveyJsPhpSdk\Model\PageModel;
 use SurveyJsPhpSdk\Parser\SurveyTemplateParser;
 
 class SurveyTemplateParserTest extends TestCase
@@ -104,7 +104,7 @@ class SurveyTemplateParserTest extends TestCase
         $this->assertEquals('off', $model->getShowQuestionNumbers());
 
         foreach($model->getPages() as $page){
-            $this->assertInstanceOf(SurveyPageModel::class, $page);
+            $this->assertInstanceOf(PageModel::class, $page);
         }
     }
 

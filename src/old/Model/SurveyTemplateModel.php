@@ -6,7 +6,7 @@ class SurveyTemplateModel
 {
 
     /**
-     * @var SurveyPageModel[] 
+     * @var PageModel[] 
      */
     private $pages = [];
 
@@ -31,7 +31,7 @@ class SurveyTemplateModel
     private $showQuestionNumbers;
 
     /**
-     * @return SurveyPageModel[]
+     * @return PageModel[]
      */
     public function getPages(): array
     {
@@ -39,11 +39,11 @@ class SurveyTemplateModel
     }
 
     /**
-     * @param SurveyPageModel $pageToAdd
+     * @param PageModel $pageToAdd
      *
-     * @return SurveyTemplateModel
+     * @return TemplateModel
      */
-    public function addPage(SurveyPageModel $pageToAdd): self
+    public function addPage(PageModel $pageToAdd): self
     {
         foreach($this->pages as $page){
             if($page->getName() === $pageToAdd->getName()) {
@@ -57,11 +57,11 @@ class SurveyTemplateModel
     }
 
     /**
-     * @param SurveyPageModel $pageToRemove
+     * @param PageModel $pageToRemove
      *
-     * @return SurveyTemplateModel
+     * @return TemplateModel
      */
-    public function removePage(SurveyPageModel $pageToRemove): self
+    public function removePage(PageModel $pageToRemove): self
     {
         foreach($this->pages as $index => $page){
             if($page->getName() === $pageToRemove->getName()) {
@@ -84,7 +84,7 @@ class SurveyTemplateModel
     /**
      * @param string $showNavigationButtons
      *
-     * @return SurveyTemplateModel
+     * @return TemplateModel
      */
     public function setShowNavigationButtons(string $showNavigationButtons): self
     {
@@ -104,7 +104,7 @@ class SurveyTemplateModel
     /**
      * @param bool $showPageTitles
      *
-     * @return SurveyTemplateModel
+     * @return TemplateModel
      */
     public function setShowPageTitles(bool $showPageTitles): self
     {
@@ -124,7 +124,7 @@ class SurveyTemplateModel
     /**
      * @param bool $showCompletedPage
      *
-     * @return SurveyTemplateModel
+     * @return TemplateModel
      */
     public function setShowCompletedPage(bool $showCompletedPage): self
     {
@@ -144,7 +144,7 @@ class SurveyTemplateModel
     /**
      * @param string $showQuestionNumbers
      *
-     * @return SurveyTemplateModel
+     * @return TemplateModel
      */
     public function setShowQuestionNumbers(string $showQuestionNumbers): self
     {

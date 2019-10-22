@@ -5,18 +5,18 @@ namespace SurveyJsPhpSdk\Model\Element;
 
 
 use SurveyJsPhpSdk\Model\SurveyChoiceModel;
-use SurveyJsPhpSdk\Model\SurveyResultModel;
+use SurveyJsPhpSdk\Model\ResultModel;
 
 abstract class AbstractChoiceElementModel extends AbstractSurveyElementModel
 {
 
     /**
-     * @var string 
+     * @var string
      */
     private $choicesOrder;
 
     /**
-     * @var SurveyChoiceModel[] 
+     * @var SurveyChoiceModel[]
      */
     private $choices = [];
 
@@ -84,11 +84,11 @@ abstract class AbstractChoiceElementModel extends AbstractSurveyElementModel
     }
 
     /**
-     * @param SurveyResultModel $result
+     * @param ResultModel $result
      *
      * @return bool
      */
-    public function isValidResult(SurveyResultModel $result): bool
+    public function isValidResult(ResultModel $result): bool
     {
         if(parent::isValidResult($result)) {
 

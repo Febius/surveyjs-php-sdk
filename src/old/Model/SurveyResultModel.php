@@ -27,7 +27,7 @@ class SurveyResultModel
     /**
      * @param string $question
      *
-     * @return SurveyResultModel
+     * @return ResultModel
      */
     public function setQuestion(string $question): self
     {
@@ -47,7 +47,7 @@ class SurveyResultModel
     /**
      * @param string $answer
      *
-     * @return SurveyResultModel
+     * @return ResultModel
      */
     public function setAnswer(string $answer): self
     {
