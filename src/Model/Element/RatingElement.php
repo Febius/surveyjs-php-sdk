@@ -1,10 +1,8 @@
 <?php
 
-
 namespace SurveyJsPhpSdk\Model\Element;
 
-
-class RatingElement extends AbstractChoiceElementModel
+class RatingElement extends ChoiceElementAbstract
 {
 
 }

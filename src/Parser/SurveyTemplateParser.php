@@ -1,57 +1,54 @@
 <?php
 
-
 namespace SurveyJsPhpSdk\Parser;
 
-
-use SurveyJsPhpSdk\Configuration\CustomElementsConfiguration;
-use SurveyJsPhpSdk\Exception\ElementPropertyNotFoundException;
-use SurveyJsPhpSdk\Exception\InvalidParsedCustomElementModelException;
-use SurveyJsPhpSdk\Exception\PagePropertyNotFoundException;
-use SurveyJsPhpSdk\Exception\UnknownElementTypeException;
-use SurveyJsPhpSdk\Model\SurveyTemplateModel;
+use SurveyJsPhpSdk\Configuration\ElementConfiguration;
+use SurveyJsPhpSdk\Exception\InvalidElementConfigurationException;
+use SurveyJsPhpSdk\Exception\MissingElementConfigurationException;
+use SurveyJsPhpSdk\Factory\ElementFactory;
+use SurveyJsPhpSdk\Factory\PageFactory;
+use SurveyJsPhpSdk\Factory\TemplateFactory;
+use SurveyJsPhpSdk\Model\TemplateModel;
 
 class SurveyTemplateParser
 {
     /**
-     * @param string                           $jsonTemplate
-     * @param CustomElementsConfiguration|null $configuration
-     *
-     * @throws ElementPropertyNotFoundException
-     * @throws PagePropertyNotFoundException
-     * @throws UnknownElementTypeException
-     * @throws InvalidParsedCustomElementModelException
-     *
-     * @return SurveyTemplateModel
+     * @var ElementConfiguration[]
      */
-    public static function parseToModel(string $jsonTemplate, ?CustomElementsConfiguration $configuration = null): SurveyTemplateModel
+    private $customConfigurations = [];
+
+    /**
+     * @param ElementConfiguration[] $customConfigurations
+     * @throws InvalidElementConfigurationException
+     */
+    public function __construct($customConfigurations = array())
     {
-        $decodedTemplate = json_decode($jsonTemplate);
-
-        if(!isset($decodedTemplate->pages)) {
-            throw new PagePropertyNotFoundException();
+        foreach ($customConfigurations as $customConfiguration) {
+            if (($customConfiguration instanceof ElementConfiguration) === false) {
+                throw new InvalidElementConfigurationException();
+            }
+            $this->customConfigurations[$customConfiguration->getType()] = $customConfiguration;
         }
+    }
 
-        $surveyTemplateModel = new SurveyTemplateModel();
+    /**
+     * @param string $jsonTemplate
+     * @return TemplateModel
+     * @throws MissingElementConfigurationException
+     */
+    public function parse(string $jsonTemplate): TemplateModel
+    {
+        $template = json_decode($jsonTemplate);
+        $surveyTemplateModel = TemplateFactory::create($template);
 
-        if(isset($decodedTemplate->showNavigationButtons)) {
-            $surveyTemplateModel->setShowNavigationButtons($decodedTemplate->showNavigationButtons);
-        }
+        foreach ($template->pages as $page) {
+            $pageModel = PageFactory::create($page);
 
-        if(isset($decodedTemplate->showPageTitles)) {
-            $surveyTemplateModel->setShowPageTitles($decodedTemplate->showPageTitles);
-        }
+            foreach ($page->elements as $element) {
+                $pageModel->addElement(ElementFactory::create($element, $this->customConfigurations[$element->type]));
+            }
 
-        if(isset($decodedTemplate->showCompletedPage)) {
-            $surveyTemplateModel->setShowCompletedPage($decodedTemplate->showCompletedPage);
-        }
-
-        if(isset($decodedTemplate->showQuestionNumbers)) {
-            $surveyTemplateModel->setShowQuestionNumbers($decodedTemplate->showQuestionNumbers);
-        }
-
-        foreach($decodedTemplate->pages as $page){
-            $surveyTemplateModel->addPage(SurveyPageParser::parseToModel($page, $configuration));
+            $surveyTemplateModel->addPage($pageModel);
         }
 
         return $surveyTemplateModel;

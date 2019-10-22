@@ -9,7 +9,7 @@ use SurveyJsPhpSdk\Enum\ElementEnum;
 use SurveyJsPhpSdk\Exception\ElementPropertyNotFoundException;
 use SurveyJsPhpSdk\Model\Element\AbstractSurveyElementModel;
 use SurveyJsPhpSdk\Model\Element\BaseSurveyElementModel;
-use SurveyJsPhpSdk\Model\SurveyPageModel;
+use SurveyJsPhpSdk\Model\PageModel;
 use SurveyJsPhpSdk\Parser\SurveyPageParser;
 
 class SurveyPageParserTest extends TestCase
@@ -56,7 +56,7 @@ class SurveyPageParserTest extends TestCase
 
         foreach($this->testCaseSuccess as $index => $page){
             $model = SurveyPageParser::parseToModel($page);
-            $this->assertInstanceOf(SurveyPageModel::class, $model);
+            $this->assertInstanceOf(PageModel::class, $model);
             $this->assertEquals($page->name, $model->getName());
 
             foreach($model->getElements() as $element){

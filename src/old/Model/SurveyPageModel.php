@@ -30,7 +30,7 @@ class SurveyPageModel
     /**
      * @param string $name
      *
-     * @return SurveyPageModel
+     * @return PageModel
      */
     public function setName(string $name): self
     {
@@ -50,7 +50,7 @@ class SurveyPageModel
     /**
      * @param BaseSurveyElementModel $elementToAdd
      *
-     * @return SurveyPageModel
+     * @return PageModel
      */
     public function addElement(BaseSurveyElementModel $elementToAdd): self
     {
@@ -68,7 +68,7 @@ class SurveyPageModel
     /**
      * @param BaseSurveyElementModel $elementToRemove
      *
-     * @return SurveyPageModel
+     * @return PageModel
      */
     public function removeElement(BaseSurveyElementModel $elementToRemove): self
     {

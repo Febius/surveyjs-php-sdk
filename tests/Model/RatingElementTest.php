@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use SurveyJsPhpSdk\Model\Element\AbstractSurveyElementModel;
 use SurveyJsPhpSdk\Model\Element\RatingElement;
 use SurveyJsPhpSdk\Model\SurveyChoiceModel;
-use SurveyJsPhpSdk\Model\SurveyResultModel;
+use SurveyJsPhpSdk\Model\ResultModel;
 
 class RatingElementTest extends TestCase
 {
@@ -34,7 +34,7 @@ class RatingElementTest extends TestCase
 
     public function testIsValidResult()
     {
-        $result = new SurveyResultModel();
+        $result = new ResultModel();
 
         $result->setQuestion('Great rating question');
         $result->setAnswer('1');
@@ -44,7 +44,7 @@ class RatingElementTest extends TestCase
 
     public function testIsNotValidResultWrongQuestion()
     {
-        $result = new SurveyResultModel();
+        $result = new ResultModel();
 
         $result->setQuestion('Wrong rating question');
         $result->setAnswer('1');
@@ -54,7 +54,7 @@ class RatingElementTest extends TestCase
 
     public function testIsNotValidResultWrongAnswer()
     {
-        $result = new SurveyResultModel();
+        $result = new ResultModel();
 
         $result->setQuestion('Great rating question');
         $result->setAnswer('5');

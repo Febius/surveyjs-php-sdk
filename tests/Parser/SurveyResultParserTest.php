@@ -6,7 +6,7 @@ namespace SurveyJsPhpSdk\Tests\Parser;
 
 use PHPUnit\Framework\TestCase;
 use SurveyJsPhpSdk\Exception\InvalidSurveyResultException;
-use SurveyJsPhpSdk\Model\SurveyResultModel;
+use SurveyJsPhpSdk\Model\ResultModel;
 use SurveyJsPhpSdk\Parser\SurveyResultParser;
 use SurveyJsPhpSdk\Parser\SurveyTemplateParser;
 
@@ -96,7 +96,7 @@ class SurveyResultParserTest extends TestCase
         $testAnswers = array_values($testCase);
 
         foreach($models as $index => $model){
-            $this->assertInstanceOf(SurveyResultModel::class, $model);
+            $this->assertInstanceOf(ResultModel::class, $model);
             $this->assertEquals($testQuestions[$index], $model->getQuestion());
             $this->assertEquals($testAnswers[$index], $model->getAnswer());
         }

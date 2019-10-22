@@ -9,7 +9,7 @@ use SurveyJsPhpSdk\Enum\ElementEnum;
 use SurveyJsPhpSdk\Model\Element\CheckboxElement;
 use SurveyJsPhpSdk\Model\Element\RadiogroupElement;
 use SurveyJsPhpSdk\Model\SurveyChoiceModel;
-use SurveyJsPhpSdk\Parser\Element\CheckboxParser;
+use SurveyJsPhpSdk\Parser\Element\DefaultChoiceElementParser;
 use SurveyJsPhpSdk\Parser\Element\RadiogroupParser;
 
 class RadiogroupParserTest extends TestCase

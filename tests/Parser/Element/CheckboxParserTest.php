@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use SurveyJsPhpSdk\Enum\ElementEnum;
 use SurveyJsPhpSdk\Model\Element\CheckboxElement;
 use SurveyJsPhpSdk\Model\SurveyChoiceModel;
-use SurveyJsPhpSdk\Parser\Element\CheckboxParser;
+use SurveyJsPhpSdk\Parser\Element\DefaultChoiceElementParser;
 
 class CheckboxParserTest extends TestCase
 {
@@ -43,7 +43,7 @@ class CheckboxParserTest extends TestCase
 
     public function testParseToModel()
     {
-        $model = CheckboxParser::parseToModel($this->element);
+        $model = DefaultChoiceElementParser::parseToModel($this->element);
 
         $this->assertInstanceOf(CheckboxElement::class, $model);
 

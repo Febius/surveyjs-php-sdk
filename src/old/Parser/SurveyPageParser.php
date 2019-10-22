@@ -8,7 +8,7 @@ use SurveyJsPhpSdk\Configuration\CustomElementsConfiguration;
 use SurveyJsPhpSdk\Exception\ElementPropertyNotFoundException;
 use SurveyJsPhpSdk\Exception\InvalidParsedCustomElementModelException;
 use SurveyJsPhpSdk\Exception\UnknownElementTypeException;
-use SurveyJsPhpSdk\Model\SurveyPageModel;
+use SurveyJsPhpSdk\Model\PageModel;
 
 class SurveyPageParser
 {
@@ -16,15 +16,15 @@ class SurveyPageParser
      * @param \stdClass                        $page
      * @param CustomElementsConfiguration|null $configuration
      *
-     * @throws ElementPropertyNotFoundException
-     * @throws UnknownElementTypeException
+     * @return PageModel
+     *@throws UnknownElementTypeException
      * @throws InvalidParsedCustomElementModelException
      *
-     * @return SurveyPageModel
+     * @throws ElementPropertyNotFoundException
      */
-    public static function parseToModel(\stdClass $page, ?CustomElementsConfiguration $configuration = null): SurveyPageModel
+    public static function parseToModel(\stdClass $page, ?CustomElementsConfiguration $configuration = null): PageModel
     {
-        $pageModel = new SurveyPageModel();
+        $pageModel = new PageModel();
 
         $pageModel->setName($page->name);
 
