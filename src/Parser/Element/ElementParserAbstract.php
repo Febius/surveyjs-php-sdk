@@ -4,28 +4,20 @@ namespace SurveyJsPhpSdk\Parser\Element;
 
 use SurveyJsPhpSdk\Model\Element\ElementInterface;
 
-abstract class ElementParserAbstract
+abstract class ElementParserAbstract implements ElementParserInterface
 {
-    protected function configure(ElementInterface $element, \stdClass $data): ElementInterface
+
+    public function configure(ElementInterface $element, \stdClass $data): ElementInterface
     {
         if (isset($data->name)) {
             $element->setName($data->name);
         }
 
-        if (isset($data->title)) {
-            $element->setTitle($data->title);
-        }
-
-        if (isset($data->isRequired)) {
-            $element->setRequired($data->isRequired);
-        }
-
-        if (isset($data->enableIf)) {
-            $element->setEnableIf($data->enableIf);
-        }
-
         return $element;
     }
 
-    abstract public function parse(ElementInterface $element, \stdClass $data): ElementInterface;
+    public function parse(ElementInterface $element, \stdClass $data): ElementInterface
+    {
+        return $this->configure($element, $data);
+    }
 }
