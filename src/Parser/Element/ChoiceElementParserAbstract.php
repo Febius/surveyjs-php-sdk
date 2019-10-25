@@ -6,7 +6,7 @@ use SurveyJsPhpSdk\Factory\ChoiceFactory;
 use SurveyJsPhpSdk\Model\Element\ChoiceElementAbstract;
 use SurveyJsPhpSdk\Model\Element\ElementInterface;
 
-abstract class ChoiceElementParserAbstract extends ElementParserAbstract
+abstract class ChoiceElementParserAbstract extends DefaultElementParser
 {
     /**
      * @param ChoiceElementAbstract|ElementInterface $element

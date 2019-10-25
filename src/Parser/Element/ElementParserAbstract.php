@@ -7,7 +7,7 @@ use SurveyJsPhpSdk\Model\Element\ElementInterface;
 abstract class ElementParserAbstract implements ElementParserInterface
 {
 
-    public function configure(ElementInterface $element, \stdClass $data): ElementInterface
+    protected function configure(ElementInterface $element, \stdClass $data): ElementInterface
     {
         if (isset($data->name)) {
             $element->setName($data->name);
