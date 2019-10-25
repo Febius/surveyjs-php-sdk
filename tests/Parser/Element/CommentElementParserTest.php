@@ -5,9 +5,11 @@ namespace SurveyJsPhpSdk\Tests\Parser\Element;
 
 
 use PHPStan\Testing\TestCase;
+use SurveyJsPhpSdk\Exception\InvalidModelGivenToParserException;
 use SurveyJsPhpSdk\Factory\ElementFactory;
 use SurveyJsPhpSdk\Model\Element\CommentElement;
 use SurveyJsPhpSdk\Parser\Element\CommentElementParser;
+use SurveyJsPhpSdk\Tests\Fake\FakeCustomElementModel;
 
 class CommentElementParserTest extends TestCase
 {
@@ -43,5 +45,16 @@ class CommentElementParserTest extends TestCase
         $this->assertEquals($this->element->title, $model->getTitle());
         $this->assertEquals($this->element->isRequired, $model->isRequired());
         $this->assertEquals($this->element->enableIf, $model->getEnableIf());
+    }
+
+
+    public function testParseRaiseException()
+    {
+        $model = new FakeCustomElementModel();
+
+        $this->expectException(InvalidModelGivenToParserException::class);
+        $this->expectExceptionMessage('Model passed to parser is invalid: ' . get_class($model) . ' expected: ' . CommentElement::class);
+
+        $this->sut->parse($model, new \stdClass());
     }
 }
