@@ -30,11 +30,13 @@ abstract class ChoiceSurveyElementParserAbstract extends DefaultSurveyElementPar
         return $element;
     }
 
-    protected function getChoicesData(\stdClass $data){
+    protected function getChoicesData(\stdClass $data)
+    {
         return $data->choices;
     }
 
-    protected function formatChoiceObject($value){
+    protected function formatChoiceObject($value)
+    {
         return ! is_object($value) ? (object)['text' => $value, 'value' => $value] : $value;
     }
 }

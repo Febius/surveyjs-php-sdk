@@ -82,12 +82,20 @@ class SurveyResultParserTest extends TestCase
     private $testCaseFail1 = '{"question1":"3","question2":"2","question3":"some extra notes","question4":"1"}';
     private $testCaseFail2 = '{"question5":"2","question2":"2","question3":"some extra notes","question4":"1"}';
 
+    /**
+     * @var SurveyResultParser
+     */
+    private $sut;
 
 
+    protected function setUp()
+    {
+        $this->sut = new SurveyResultParser();
+    }
 
     public function testParseToModel(){
 
-        $models = SurveyResultParser::parseToModel(SurveyTemplateParser::parseToModel($this->templateJson), $this->testCaseSuccess);
+        $models = $this->sut->parse((new SurveyTemplateParser)->parse($this->templateJson), $this->testCaseSuccess);
 
         $testCase = (array)json_decode($this->testCaseSuccess);
 
@@ -105,12 +113,12 @@ class SurveyResultParserTest extends TestCase
     public function testParseToModelRaiseExceptionWrongAnswer(){
         $this->expectException(InvalidSurveyResultException::class);
 
-        SurveyResultParser::parseToModel(SurveyTemplateParser::parseToModel($this->templateJson), $this->testCaseFail1);
+        $this->sut->parse((new SurveyTemplateParser)->parse($this->templateJson), $this->testCaseFail1);
     }
 
     public function testParseToModelRaiseExceptionWrongQuestion(){
         $this->expectException(InvalidSurveyResultException::class);
 
-        SurveyResultParser::parseToModel(SurveyTemplateParser::parseToModel($this->templateJson), $this->testCaseFail2);
+        $this->sut->parse((new SurveyTemplateParser)->parse($this->templateJson), $this->testCaseFail2);
     }
 }

@@ -26,11 +26,11 @@ class SurveyResultParser
 
         $results = (array)json_decode($jsonResults);
 
-        foreach($results as $question => $result){
+        foreach ($results as $question => $result) {
             $resultModel = ResultFactory::create($question, $result);
 
-            if(!self::validateResult($survey->getPages(), $resultModel)) {
-                throw new InvalidSurveyResultException();
+            if (!self::validateResult($survey->getPages(), $resultModel)) {
+                throw new InvalidSurveyResultException($resultModel->getQuestion() . ' => ' . $resultModel->getAnswer());
             }
 
             $resultsModels[] = $resultModel;
@@ -50,10 +50,11 @@ class SurveyResultParser
         /**
          * @var PageModel $page
          */
-        foreach($pages as $page){
-            foreach($page->getElements() as $element){
-                if($element instanceOf ElementAbstract && $element->isValidResult($result)) {
-                    return true; //exit at first validation match
+        foreach ($pages as $page) {
+            foreach ($page->getElements() as $element) {
+                if ($element instanceof ElementAbstract && $element->isValidResult($result)) {
+                    //exit at first validation match because there should be 1 to 1 correspondence between results and elements
+                    return true;
                 }
             }
         }

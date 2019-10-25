@@ -4,14 +4,9 @@
 namespace SurveyJsPhpSdk\Tests\Fake;
 
 
-use SurveyJsPhpSdk\Model\Element\CustomElementModelInterface;
-use SurveyJsPhpSdk\Parser\Element\CustomElementParserInterface;
+use SurveyJsPhpSdk\Parser\Element\ElementParserAbstract;
 
-class FakeCustomElementParser implements CustomElementParserInterface
+class FakeCustomElementParser extends ElementParserAbstract
 {
 
-    public static function parseToModel(\stdClass $element): CustomElementModelInterface
-    {
-        return new FakeCustomElementModel();
-    }
 }
