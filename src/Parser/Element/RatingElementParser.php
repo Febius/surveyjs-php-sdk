@@ -2,9 +2,9 @@
 
 namespace SurveyJsPhpSdk\Parser\Element;
 
-class RatingElementParser extends ChoiceElementParserAbstract
+class RatingElementParser extends ChoiceSurveyElementParserAbstract
 {
-    public function getChoicesData(\stdClass $data): array
+    protected function getChoicesData(\stdClass $data): array
     {
         $choicesData = [];
 
@@ -22,9 +22,8 @@ class RatingElementParser extends ChoiceElementParserAbstract
                 ];
             }
         } else {
-            // TODO Try to define a shared way with ChoiceElementParserAbstract::parse
             foreach ($data->rateValues as $value) {
-                $choicesData[] = ! is_object($value) ? (object)['text' => $value, 'value' => $value] : $value;
+                $choicesData[] = $this->formatChoiceObject($value);
             }
         }
 

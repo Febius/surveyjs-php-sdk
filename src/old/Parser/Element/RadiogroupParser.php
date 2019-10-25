@@ -11,7 +11,7 @@ class RadiogroupParser
     /**
      * @param \stdClass $element
      *
-     * @return RadiogroupElement
+     * @return RadiogroupElementParser
      */
     public static function parseToModel(\stdClass $element): RadiogroupElement
     {
