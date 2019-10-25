@@ -3,7 +3,6 @@
 
 namespace SurveyJsPhpSdk\Factory;
 
-
 use SurveyJsPhpSdk\Model\ResultModel;
 
 class ResultFactory

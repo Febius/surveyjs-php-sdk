@@ -6,6 +6,7 @@ use SurveyJsPhpSdk\Configuration\ElementConfiguration;
 use SurveyJsPhpSdk\Exception\ElementTypeNotFoundException;
 use SurveyJsPhpSdk\Exception\InvalidElementConfigurationException;
 use SurveyJsPhpSdk\Exception\MissingElementConfigurationException;
+use SurveyJsPhpSdk\Exception\PageDataNotFoundException;
 use SurveyJsPhpSdk\Factory\ElementFactory;
 use SurveyJsPhpSdk\Factory\PageFactory;
 use SurveyJsPhpSdk\Factory\TemplateFactory;
@@ -37,6 +38,7 @@ class SurveyTemplateParser
      *
      * @throws ElementTypeNotFoundException
      * @throws MissingElementConfigurationException
+     * @throws PageDataNotFoundException
      *
      * @return TemplateModel
      */
@@ -45,11 +47,14 @@ class SurveyTemplateParser
         $template = json_decode($jsonTemplate);
         $surveyTemplateModel = TemplateFactory::create($template);
 
+        if (!isset($template->pages)) {
+            throw new PageDataNotFoundException();
+        }
+
         foreach ($template->pages as $page) {
             $pageModel = PageFactory::create($page);
 
             foreach ($page->elements as $element) {
-
                 $config = $this->getConfigForElement($element);
 
                 $pageModel->addElement(ElementFactory::create($element, $config));
@@ -71,15 +76,15 @@ class SurveyTemplateParser
      */
     private function getConfigForElement(\stdClass $element): ?ElementConfiguration
     {
-        if(!isset($element->type)){
+        if (!isset($element->type)) {
             throw new ElementTypeNotFoundException();
         }
 
-        if(in_array($element->type, ElementFactory::KNOWN_TYPES)){
+        if (in_array($element->type, ElementFactory::KNOWN_TYPES)) {
             return null;
         }
 
-        if(!isset($this->customConfigurations[$element->type])){
+        if (!isset($this->customConfigurations[$element->type])) {
             throw new MissingElementConfigurationException($element->type);
         }
 

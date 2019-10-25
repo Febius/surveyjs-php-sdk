@@ -18,12 +18,12 @@ use SurveyJsPhpSdk\Parser\Element\RatingElementParser;
 
 class ElementFactory
 {
-    const CHECKBOX_TYPE = 'checkbox';
-    const COMMENT_TYPE = 'comment';
-    const RADIO_GROUP_TYPE = 'radiogroup';
-    const RATING_TYPE = 'rating';
+    public const CHECKBOX_TYPE = 'checkbox';
+    public const COMMENT_TYPE = 'comment';
+    public const RADIO_GROUP_TYPE = 'radiogroup';
+    public const RATING_TYPE = 'rating';
 
-    const KNOWN_TYPES = [
+    public const KNOWN_TYPES = [
         self::COMMENT_TYPE,
         self::CHECKBOX_TYPE,
         self::RADIO_GROUP_TYPE,
@@ -33,8 +33,10 @@ class ElementFactory
     /**
      * @param \stdClass $element
      * @param ElementConfiguration|null $configuration
-     * @return ElementInterface
+     *
      * @throws MissingElementConfigurationException
+     *
+     * @return ElementInterface
      */
     public static function create(\stdClass $element, ?ElementConfiguration $configuration): ElementInterface
     {
@@ -52,10 +54,10 @@ class ElementFactory
                 $parser = new RatingElementParser();
                 return $parser->parse(new RatingElement(), $element);
             default:
-                if (null === $configuration) {
-                    throw new MissingElementConfigurationException($element->type);
+                if ($element->type === $configuration->getType()) {
+                    return $configuration->getParser()->parse($configuration->getElement(), $element);
                 }
-                return $configuration->getParser()->parse($configuration->getElement(), $element);
+                throw new MissingElementConfigurationException($element->type);
         }
     }
 }
