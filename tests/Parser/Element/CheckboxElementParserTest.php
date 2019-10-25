@@ -7,20 +7,19 @@ namespace SurveyJsPhpSdk\Tests\Parser\Element;
 use PHPUnit\Framework\TestCase;
 use SurveyJsPhpSdk\Exception\InvalidModelGivenToParserException;
 use SurveyJsPhpSdk\Factory\ElementFactory;
+use SurveyJsPhpSdk\Model\Element\CheckboxElement;
 use SurveyJsPhpSdk\Model\Element\Choice\Choice;
-use SurveyJsPhpSdk\Model\Element\RadioGroupElement;
-use SurveyJsPhpSdk\Parser\Element\RadiogroupElementParser;
+use SurveyJsPhpSdk\Parser\Element\CheckboxElementParser;
 use SurveyJsPhpSdk\Tests\Fake\FakeCustomElementModel;
 
-class RadiogroupElementParserTest extends TestCase
+class CheckboxElementParserTest extends TestCase
 {
-
     /**
      * @var object
      */
     private $element;
     /**
-     * @var RadiogroupElementParser
+     * @var CheckboxElementParser
      */
     private $sut;
 
@@ -37,7 +36,7 @@ class RadiogroupElementParserTest extends TestCase
         ];
 
         $this->element = (object)[
-            'type'         => ElementFactory::RADIO_GROUP_TYPE,
+            'type'         => ElementFactory::CHECKBOX_TYPE,
             'name'         => 'element_2',
             'title'        => 'Element 2',
             'isRequired'   => false,
@@ -46,14 +45,14 @@ class RadiogroupElementParserTest extends TestCase
             'choices'      => [$choice1, $choice2, 'item3']
         ];
 
-        $this->sut = new RadiogroupElementParser();
+        $this->sut = new CheckboxElementParser();
     }
 
     public function testParseSuccess()
     {
-        $model = $this->sut->parse(new RadioGroupElement(), $this->element);
+        $model = $this->sut->parse(new CheckboxElement(), $this->element);
 
-        $this->assertInstanceOf(RadiogroupElement::class, $model);
+        $this->assertInstanceOf(CheckboxElement::class, $model);
         $this->assertEquals($this->element->name, $model->getName());
         $this->assertEquals($this->element->title, $model->getTitle());
         $this->assertEquals($this->element->isRequired, $model->isRequired());
@@ -69,7 +68,7 @@ class RadiogroupElementParserTest extends TestCase
         $model = new FakeCustomElementModel();
 
         $this->expectException(InvalidModelGivenToParserException::class);
-        $this->expectExceptionMessage('Model passed to parser is invalid: ' . get_class($model) . ' expected: ' . RadioGroupElement::class);
+        $this->expectExceptionMessage('Model passed to parser is invalid: ' . get_class($model) . ' expected: ' . CheckboxElement::class);
 
         $this->sut->parse($model, new \stdClass());
     }
