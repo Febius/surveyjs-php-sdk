@@ -6,7 +6,7 @@ use SurveyJsPhpSdk\Factory\ChoiceFactory;
 use SurveyJsPhpSdk\Model\Element\ChoiceElementAbstract;
 use SurveyJsPhpSdk\Model\Element\ElementInterface;
 
-abstract class ChoiceElementParserAbstract extends DefaultElementParser
+abstract class ChoiceSurveyElementParserAbstract extends DefaultSurveyElementParserAbstract
 {
     /**
      * @param ChoiceElementAbstract|ElementInterface $element
@@ -22,8 +22,7 @@ abstract class ChoiceElementParserAbstract extends DefaultElementParser
         }
 
         foreach ($this->getChoicesData($data) as $value) {
-            // TODO Try to define a shared way with RatingElementParser::getChoicesData
-            $choiceData = ! is_object($value) ? (object)['text' => $value, 'value' => $value] : $value;
+            $choiceData = $this->formatChoiceObject($value);
 
             $element->addChoice(ChoiceFactory::create($choiceData));
         }
@@ -31,5 +30,11 @@ abstract class ChoiceElementParserAbstract extends DefaultElementParser
         return $element;
     }
 
-    abstract protected function getChoicesData(\stdClass $data): array;
+    protected function getChoicesData(\stdClass $data){
+        return $data->choices;
+    }
+
+    protected function formatChoiceObject($value){
+        return ! is_object($value) ? (object)['text' => $value, 'value' => $value] : $value;
+    }
 }
