@@ -4,6 +4,7 @@
 namespace SurveyJsPhpSdk\Parser;
 
 use SurveyJsPhpSdk\Exception\InvalidSurveyResultException;
+use SurveyJsPhpSdk\Factory\ResultFactory;
 use SurveyJsPhpSdk\Model\Element\ElementAbstract;
 use SurveyJsPhpSdk\Model\PageModel;
 use SurveyJsPhpSdk\Model\ResultModel;
@@ -26,10 +27,7 @@ class SurveyResultParser
         $results = (array)json_decode($jsonResults);
 
         foreach($results as $question => $result){
-            $resultModel = new ResultModel();
-
-            $resultModel->setQuestion($question);
-            $resultModel->setAnswer($result);
+            $resultModel = ResultFactory::create($question, $result);
 
             if(!self::validateResult($survey->getPages(), $resultModel)) {
                 throw new InvalidSurveyResultException();
@@ -53,10 +51,9 @@ class SurveyResultParser
          * @var PageModel $page
          */
         foreach($pages as $page){
-
             foreach($page->getElements() as $element){
                 if($element instanceOf ElementAbstract && $element->isValidResult($result)) {
-                    return true;
+                    return true; //exit at first validation match
                 }
             }
         }

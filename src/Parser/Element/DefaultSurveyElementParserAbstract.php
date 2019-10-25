@@ -5,9 +5,10 @@ namespace SurveyJsPhpSdk\Parser\Element;
 use SurveyJsPhpSdk\Model\Element\ElementAbstract;
 use SurveyJsPhpSdk\Model\Element\ElementInterface;
 
-class DefaultElementParser extends ElementParserAbstract
+abstract class DefaultSurveyElementParserAbstract extends ElementParserAbstract
 {
-    public function configure(ElementInterface $element, \stdClass $data): ElementInterface
+
+    protected function configure(ElementInterface $element, \stdClass $data): ElementInterface
     {
         /** @var ElementAbstract $element */
         $element = parent::configure($element, $data);
