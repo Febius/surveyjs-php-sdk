@@ -5,10 +5,12 @@ namespace SurveyJsPhpSdk\Tests\Parser\Element;
 
 
 use PHPUnit\Framework\TestCase;
+use SurveyJsPhpSdk\Exception\InvalidModelGivenToParserException;
 use SurveyJsPhpSdk\Factory\ElementFactory;
 use SurveyJsPhpSdk\Model\Element\Choice\Choice;
 use SurveyJsPhpSdk\Model\Element\RatingElement;
 use SurveyJsPhpSdk\Parser\Element\RatingElementParser;
+use SurveyJsPhpSdk\Tests\Fake\FakeCustomElementModel;
 
 class RatingElementParserTest extends TestCase
 {
@@ -76,5 +78,15 @@ class RatingElementParserTest extends TestCase
                 $this->assertEquals((string)($index + 1), $choice->getText());
             }
         }
+    }
+
+    public function testParseRaiseException()
+    {
+        $model = new FakeCustomElementModel();
+
+        $this->expectException(InvalidModelGivenToParserException::class);
+        $this->expectExceptionMessage('Model passed to parser is invalid: ' . get_class($model) . ' expected: ' . RatingElement::class);
+
+        $this->sut->parse($model, new \stdClass());
     }
 }

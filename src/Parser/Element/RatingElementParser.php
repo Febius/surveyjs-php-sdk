@@ -2,8 +2,21 @@
 
 namespace SurveyJsPhpSdk\Parser\Element;
 
+use SurveyJsPhpSdk\Exception\InvalidModelGivenToParserException;
+use SurveyJsPhpSdk\Model\Element\ElementInterface;
+use SurveyJsPhpSdk\Model\Element\RatingElement;
+
 class RatingElementParser extends ChoiceSurveyElementParserAbstract
 {
+    public function parse(ElementInterface $element, \stdClass $data): ElementInterface
+    {
+        if(!$element instanceof RatingElement){
+            throw new InvalidModelGivenToParserException(get_class($element) . ' expected: ' . RatingElement::class);
+        }
+
+        return parent::parse($element, $data);
+    }
+
     protected function getChoicesData(\stdClass $data): array
     {
         $choicesData = [];

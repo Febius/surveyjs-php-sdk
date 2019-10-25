@@ -1,10 +1,12 @@
 <?php
 
+
 namespace SurveyJsPhpSdk\Exception;
 
-class MissingElementConfigurationException extends \Exception
+
+class InvalidModelGivenToParserException extends \Exception
 {
-    protected $message = 'The ElementConfiguration is missing for: ';
+    protected $message = 'Model passed to parser is invalid: ';
 
     public function __construct($message = "", $code = 0, \Throwable $previous = null)
     {
