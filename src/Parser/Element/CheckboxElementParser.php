@@ -11,7 +11,7 @@ class CheckboxElementParser extends ChoiceSurveyElementParserAbstract
 {
     public function parse(ElementInterface $element, \stdClass $data): ElementInterface
     {
-        if(!$element instanceof CheckboxElement){
+        if (!$element instanceof CheckboxElement) {
             throw new InvalidModelGivenToParserException(get_class($element) . ' expected: ' . CheckboxElement::class);
         }
 

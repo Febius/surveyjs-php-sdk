@@ -11,7 +11,7 @@ class CommentElementParser extends DefaultSurveyElementParserAbstract
 {
     public function parse(ElementInterface $element, \stdClass $data): ElementInterface
     {
-        if ( ! $element instanceof CommentElement) {
+        if (! $element instanceof CommentElement) {
             throw new InvalidModelGivenToParserException(get_class($element) . ' expected: ' . CommentElement::class);
         }
 

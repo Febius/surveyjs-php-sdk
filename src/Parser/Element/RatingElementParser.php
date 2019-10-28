@@ -10,7 +10,7 @@ class RatingElementParser extends ChoiceSurveyElementParserAbstract
 {
     public function parse(ElementInterface $element, \stdClass $data): ElementInterface
     {
-        if(!$element instanceof RatingElement){
+        if (!$element instanceof RatingElement) {
             throw new InvalidModelGivenToParserException(get_class($element) . ' expected: ' . RatingElement::class);
         }
 
