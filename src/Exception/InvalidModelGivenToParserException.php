@@ -3,7 +3,6 @@
 
 namespace SurveyJsPhpSdk\Exception;
 
-
 class InvalidModelGivenToParserException extends \Exception
 {
     protected $message = 'Model passed to parser is invalid: ';

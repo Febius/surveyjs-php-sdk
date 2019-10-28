@@ -11,7 +11,7 @@ class RadiogroupElementParser extends ChoiceSurveyElementParserAbstract
 {
     public function parse(ElementInterface $element, \stdClass $data): ElementInterface
     {
-        if(!$element instanceof RadioGroupElement){
+        if (!$element instanceof RadioGroupElement) {
             throw new InvalidModelGivenToParserException(get_class($element) . ' expected: ' . RadioGroupElement::class);
         }
 
