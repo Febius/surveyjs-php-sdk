@@ -2,29 +2,23 @@
 
 namespace SurveyJsPhpSdk\Parser\Element;
 
-use SurveyJsPhpSdk\Model\Element\ElementAbstract;
-use SurveyJsPhpSdk\Model\Element\ElementInterface;
-
 abstract class DefaultSurveyElementParserAbstract extends ElementParserAbstract
 {
 
-    protected function configure(ElementInterface $element, \stdClass $data): ElementInterface
+    protected function configure(\stdClass $data): void
     {
-        /** @var ElementAbstract $element */
-        $element = parent::configure($element, $data);
+        parent::configure($data);
 
         if (isset($data->title)) {
-            $element->setTitle($data->title);
+            $this->element->setTitle($data->title);
         }
 
         if (isset($data->isRequired)) {
-            $element->setRequired($data->isRequired);
+            $this->setRequired($data->isRequired);
         }
 
         if (isset($data->enableIf)) {
-            $element->setEnableIf($data->enableIf);
+            $this->setEnableIf($data->enableIf);
         }
-
-        return $element;
     }
 }

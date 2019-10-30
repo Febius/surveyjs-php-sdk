@@ -5,12 +5,10 @@ namespace SurveyJsPhpSdk\Tests\Parser\Element;
 
 
 use PHPUnit\Framework\TestCase;
-use SurveyJsPhpSdk\Exception\InvalidModelGivenToParserException;
 use SurveyJsPhpSdk\Factory\ElementFactory;
-use SurveyJsPhpSdk\Model\Element\Choice\Choice;
+use SurveyJsPhpSdk\Model\ChoiceModel;
 use SurveyJsPhpSdk\Model\Element\RadioGroupElement;
 use SurveyJsPhpSdk\Parser\Element\RadiogroupElementParser;
-use SurveyJsPhpSdk\Tests\Fake\FakeCustomElementModel;
 
 class RadiogroupElementParserTest extends TestCase
 {
@@ -51,7 +49,7 @@ class RadiogroupElementParserTest extends TestCase
 
     public function testParseSuccess()
     {
-        $model = $this->sut->parse(new RadioGroupElement(), $this->element);
+        $model = $this->sut->parse($this->element);
 
         $this->assertInstanceOf(RadiogroupElement::class, $model);
         $this->assertEquals($this->element->name, $model->getName());
@@ -60,17 +58,7 @@ class RadiogroupElementParserTest extends TestCase
         $this->assertEquals($this->element->enableIf, $model->getEnableIf());
 
         foreach($model->getChoices() as $choice){
-            $this->assertInstanceOf(Choice::class, $choice);
+            $this->assertInstanceOf(ChoiceModel::class, $choice);
         }
-    }
-
-    public function testParseRaiseException()
-    {
-        $model = new FakeCustomElementModel();
-
-        $this->expectException(InvalidModelGivenToParserException::class);
-        $this->expectExceptionMessage('Model passed to parser is invalid: ' . get_class($model) . ' expected: ' . RadioGroupElement::class);
-
-        $this->sut->parse($model, new \stdClass());
     }
 }

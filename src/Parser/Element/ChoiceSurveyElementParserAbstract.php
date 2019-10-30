@@ -5,37 +5,49 @@ namespace SurveyJsPhpSdk\Parser\Element;
 use SurveyJsPhpSdk\Factory\ChoiceFactory;
 use SurveyJsPhpSdk\Model\Element\ChoiceElementAbstract;
 use SurveyJsPhpSdk\Model\Element\ElementInterface;
+use SurveyJsPhpSdk\Parser\SurveyChoiceParser;
 
 abstract class ChoiceSurveyElementParserAbstract extends DefaultSurveyElementParserAbstract
 {
     /**
-     * @param ChoiceElementAbstract|ElementInterface $element
      * @param \stdClass $data
      * @return ElementInterface
      */
-    public function parse(ElementInterface $element, \stdClass $data): ElementInterface
+    public function parse( \stdClass $data): ElementInterface
     {
-        $this->configure($element, $data);
+        $this->configure($data);
 
         if (isset($data->choicesOrder)) {
-            $element->setChoicesOrder($data->choicesOrder);
+            $this->element->setChoicesOrder($data->choicesOrder);
         }
+
+        $choiceParser = new SurveyChoiceParser();
 
         foreach ($this->getChoicesData($data) as $value) {
             $choiceData = $this->formatChoiceObject($value);
 
-            $element->addChoice(ChoiceFactory::create($choiceData));
+            $this->element->addChoice($choiceParser->parse($choiceData));
         }
 
-        return $element;
+        return $this->element;
     }
 
-    protected function getChoicesData(\stdClass $data)
+    /**
+     * @param \stdClass $data
+     *
+     * @return array
+     */
+    protected function getChoicesData(\stdClass $data): array
     {
         return $data->choices;
     }
 
-    protected function formatChoiceObject($value)
+    /**
+     * @param $value
+     *
+     * @return object
+     */
+    protected function formatChoiceObject($value): object
     {
         return ! is_object($value) ? (object)['text' => $value, 'value' => $value] : $value;
     }
