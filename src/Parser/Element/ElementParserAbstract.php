@@ -6,7 +6,6 @@ use SurveyJsPhpSdk\Model\Element\ElementInterface;
 
 abstract class ElementParserAbstract implements ElementParserInterface
 {
-    /** @var ElementInterface */
     protected $element;
 
     protected function configure(\stdClass $data): void

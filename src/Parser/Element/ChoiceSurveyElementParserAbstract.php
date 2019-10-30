@@ -45,9 +45,9 @@ abstract class ChoiceSurveyElementParserAbstract extends DefaultSurveyElementPar
     /**
      * @param $value
      *
-     * @return object
+     * @return \stdClass
      */
-    protected function formatChoiceObject($value): object
+    protected function formatChoiceObject($value): \stdClass
     {
         return ! is_object($value) ? (object)['text' => $value, 'value' => $value] : $value;
     }
