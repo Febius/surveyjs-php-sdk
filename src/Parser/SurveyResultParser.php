@@ -27,7 +27,9 @@ class SurveyResultParser
         $results = (array)json_decode($jsonResults);
 
         foreach ($results as $question => $result) {
-            $resultModel = ResultFactory::create($question, $result);
+
+            $resultModel = new ResultModel();
+            $resultModel->setQuestion($question)->setAnswer($result);
 
             if (!self::validateResult($survey->getPages(), $resultModel)) {
                 throw new InvalidSurveyResultException($resultModel->getQuestion() . ' => ' . $resultModel->getAnswer());

@@ -1,8 +1,8 @@
 <?php
 
-namespace SurveyJsPhpSdk\Model\Element\Choice;
+namespace SurveyJsPhpSdk\Model;
 
-class Choice
+class ChoiceModel
 {
     /**
      * @var string

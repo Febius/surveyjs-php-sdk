@@ -5,12 +5,10 @@ namespace SurveyJsPhpSdk\Tests\Parser\Element;
 
 
 use PHPUnit\Framework\TestCase;
-use SurveyJsPhpSdk\Exception\InvalidModelGivenToParserException;
 use SurveyJsPhpSdk\Factory\ElementFactory;
+use SurveyJsPhpSdk\Model\ChoiceModel;
 use SurveyJsPhpSdk\Model\Element\CheckboxElement;
-use SurveyJsPhpSdk\Model\Element\Choice\Choice;
 use SurveyJsPhpSdk\Parser\Element\CheckboxElementParser;
-use SurveyJsPhpSdk\Tests\Fake\FakeCustomElementModel;
 
 class CheckboxElementParserTest extends TestCase
 {
@@ -50,7 +48,7 @@ class CheckboxElementParserTest extends TestCase
 
     public function testParseSuccess()
     {
-        $model = $this->sut->parse(new CheckboxElement(), $this->element);
+        $model = $this->sut->parse($this->element);
 
         $this->assertInstanceOf(CheckboxElement::class, $model);
         $this->assertEquals($this->element->name, $model->getName());
@@ -59,17 +57,7 @@ class CheckboxElementParserTest extends TestCase
         $this->assertEquals($this->element->enableIf, $model->getEnableIf());
 
         foreach($model->getChoices() as $choice){
-            $this->assertInstanceOf(Choice::class, $choice);
+            $this->assertInstanceOf(ChoiceModel::class, $choice);
         }
-    }
-
-    public function testParseRaiseException()
-    {
-        $model = new FakeCustomElementModel();
-
-        $this->expectException(InvalidModelGivenToParserException::class);
-        $this->expectExceptionMessage('Model passed to parser is invalid: ' . get_class($model) . ' expected: ' . CheckboxElement::class);
-
-        $this->sut->parse($model, new \stdClass());
     }
 }

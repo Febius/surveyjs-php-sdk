@@ -6,18 +6,20 @@ use SurveyJsPhpSdk\Model\Element\ElementInterface;
 
 abstract class ElementParserAbstract implements ElementParserInterface
 {
+    /** @var ElementInterface */
+    protected $element;
 
-    protected function configure(ElementInterface $element, \stdClass $data): ElementInterface
+    protected function configure(\stdClass $data): void
     {
         if (isset($data->name)) {
-            $element->setName($data->name);
+            $this->element->setName($data->name);
         }
-
-        return $element;
     }
 
-    public function parse(ElementInterface $element, \stdClass $data): ElementInterface
+    public function parse(\stdClass $data): ElementInterface
     {
-        return $this->configure($element, $data);
+        $this->configure($data);
+
+        return $this->element;
     }
 }

@@ -8,13 +8,11 @@ use SurveyJsPhpSdk\Model\Element\RatingElement;
 
 class RatingElementParser extends ChoiceSurveyElementParserAbstract
 {
-    public function parse(ElementInterface $element, \stdClass $data): ElementInterface
+    public function parse(\stdClass $data): ElementInterface
     {
-        if (!$element instanceof RatingElement) {
-            throw new InvalidModelGivenToParserException(get_class($element) . ' expected: ' . RatingElement::class);
-        }
+        $this->element = new RatingElement();
 
-        return parent::parse($element, $data);
+        return parent::parse($data);
     }
 
     protected function getChoicesData(\stdClass $data): array

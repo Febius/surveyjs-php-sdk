@@ -9,7 +9,6 @@ use SurveyJsPhpSdk\Exception\MissingElementConfigurationException;
 use SurveyJsPhpSdk\Exception\PageDataNotFoundException;
 use SurveyJsPhpSdk\Factory\ElementFactory;
 use SurveyJsPhpSdk\Factory\PageFactory;
-use SurveyJsPhpSdk\Factory\TemplateFactory;
 use SurveyJsPhpSdk\Model\TemplateModel;
 
 class SurveyTemplateParser
@@ -45,14 +44,15 @@ class SurveyTemplateParser
     public function parse(string $jsonTemplate): TemplateModel
     {
         $template = json_decode($jsonTemplate);
-        $surveyTemplateModel = TemplateFactory::create($template);
 
         if (!isset($template->pages)) {
             throw new PageDataNotFoundException();
         }
 
+        $surveyTemplateModel = new TemplateModel();
+
         foreach ($template->pages as $page) {
-            $pageModel = PageFactory::create($page);
+            $pageModel = (new SurveyPageParser())->parse($page);
 
             foreach ($page->elements as $element) {
                 $config = $this->getConfigForElement($element);
@@ -63,7 +63,7 @@ class SurveyTemplateParser
             $surveyTemplateModel->addPage($pageModel);
         }
 
-        return $surveyTemplateModel;
+        return $this->setDefaultProperties($surveyTemplateModel, $template);
     }
 
     /**
@@ -89,5 +89,32 @@ class SurveyTemplateParser
         }
 
         return $this->customConfigurations[$element->type];
+    }
+
+    /**
+     * @param TemplateModel $model
+     * @param \stdClass $data
+     *
+     * @return TemplateModel
+     */
+    private function setDefaultProperties(TemplateModel $model, \stdClass $data): TemplateModel
+    {
+        if (isset($templateData->showNavigationButtons)) {
+            $model->setShowNavigationButtons($data->showNavigationButtons);
+        }
+
+        if (isset($templateData->showPageTitles)) {
+            $model->setShowPageTitles($data->showPageTitles);
+        }
+
+        if (isset($templateData->showCompletedPage)) {
+            $model->setShowCompletedPage($data->showCompletedPage);
+        }
+
+        if (isset($templateData->showQuestionNumbers)) {
+            $model->setShowQuestionNumbers($data->showQuestionNumbers);
+        }
+
+        return $model;
     }
 }
