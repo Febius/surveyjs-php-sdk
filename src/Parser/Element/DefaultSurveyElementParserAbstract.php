@@ -14,11 +14,11 @@ abstract class DefaultSurveyElementParserAbstract extends ElementParserAbstract
         }
 
         if (isset($data->isRequired)) {
-            $this->setRequired($data->isRequired);
+            $this->element->setRequired($data->isRequired);
         }
 
         if (isset($data->enableIf)) {
-            $this->setEnableIf($data->enableIf);
+            $this->element->setEnableIf($data->enableIf);
         }
     }
 }
