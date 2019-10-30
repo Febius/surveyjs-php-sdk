@@ -5,7 +5,7 @@ namespace SurveyJsPhpSdk\Exception;
 
 class InvalidSurveyResultException extends \Exception
 {
-    protected $message = 'The survey result given is invalid: ';
+    protected $message = 'One of the survey results given is invalid: ';
 
     public function __construct($message = "", $code = 0, \Throwable $previous = null)
     {

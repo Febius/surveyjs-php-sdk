@@ -7,5 +7,5 @@ use SurveyJsPhpSdk\Model\Element\ElementInterface;
 
 interface ElementParserInterface
 {
-    public function parse(ElementInterface $element, \stdClass $data): ElementInterface;
+    public function parse(\stdClass $data): ElementInterface;
 }

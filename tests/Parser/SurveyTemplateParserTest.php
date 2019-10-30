@@ -10,7 +10,7 @@ use SurveyJsPhpSdk\Exception\ElementTypeNotFoundException;
 use SurveyJsPhpSdk\Exception\InvalidElementConfigurationException;
 use SurveyJsPhpSdk\Exception\MissingElementConfigurationException;
 use SurveyJsPhpSdk\Exception\PageDataNotFoundException;
-use SurveyJsPhpSdk\Model\Element\Choice\Choice;
+use SurveyJsPhpSdk\Model\ChoiceModel;
 use SurveyJsPhpSdk\Model\Element\ChoiceElementAbstract;
 use SurveyJsPhpSdk\Model\Element\ElementInterface;
 use SurveyJsPhpSdk\Model\PageModel;
@@ -171,7 +171,7 @@ class SurveyTemplateParserTest extends TestCase
                 if($element instanceof ChoiceElementAbstract){
 
                     foreach($element->getChoices() as $choice){
-                        $this->assertInstanceOf(Choice::class, $choice);
+                        $this->assertInstanceOf(ChoiceModel::class, $choice);
                     }
                 }
             }
