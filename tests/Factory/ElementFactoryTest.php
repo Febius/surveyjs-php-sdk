@@ -6,12 +6,14 @@ namespace SurveyJsPhpSdk\Tests\Factory;
 
 use PHPUnit\Framework\TestCase;
 use SurveyJsPhpSdk\Configuration\ElementConfiguration;
+use SurveyJsPhpSdk\Exception\ElementConfigurationErrorException;
 use SurveyJsPhpSdk\Exception\MissingElementConfigurationException;
 use SurveyJsPhpSdk\Factory\ElementFactory;
 use SurveyJsPhpSdk\Model\Element\CheckboxElement;
 use SurveyJsPhpSdk\Model\Element\CommentElement;
 use SurveyJsPhpSdk\Model\Element\RadioGroupElement;
 use SurveyJsPhpSdk\Model\Element\RatingElement;
+use SurveyJsPhpSdk\Parser\Element\CommentElementParser;
 use SurveyJsPhpSdk\Tests\Fake\FakeCustomElementModel;
 use SurveyJsPhpSdk\Tests\Fake\FakeCustomElementParser;
 
@@ -140,7 +142,16 @@ class ElementFactoryTest extends TestCase
         $this->assertInstanceOf(FakeCustomElementModel::class, $model);
     }
 
-    public function testCreateRaiseException(){
+    public function testCreateRaiseConfigurationErrorException(){
+        $this->expectException(ElementConfigurationErrorException::class);
+        $this->expectExceptionMessage('Configured model does not correspond to model returned by parser in configuration for type: custom_test_element_type');
+
+        $conf = new ElementConfiguration('custom_test_element_type', new FakeCustomElementModel(), new CommentElementParser());
+
+        ElementFactory::create($this->customElement, $conf);
+    }
+
+    public function testCreateRaiseMissingConfigurationException(){
         $this->expectException(MissingElementConfigurationException::class);
 
         $conf = new ElementConfiguration('custom_test_element_type', new FakeCustomElementModel(), new FakeCustomElementParser());

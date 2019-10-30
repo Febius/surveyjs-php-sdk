@@ -3,6 +3,7 @@
 namespace SurveyJsPhpSdk\Factory;
 
 use SurveyJsPhpSdk\Configuration\ElementConfiguration;
+use SurveyJsPhpSdk\Exception\ElementConfigurationErrorException;
 use SurveyJsPhpSdk\Exception\MissingElementConfigurationException;
 use SurveyJsPhpSdk\Model\Element\CheckboxElement;
 use SurveyJsPhpSdk\Model\Element\CommentElement;
@@ -34,6 +35,7 @@ class ElementFactory
      * @param \stdClass $element
      * @param ElementConfiguration|null $configuration
      *
+     * @throws ElementConfigurationErrorException
      * @throws MissingElementConfigurationException
      *
      * @return ElementInterface
@@ -43,19 +45,24 @@ class ElementFactory
         switch ($element->type) {
             case self::CHECKBOX_TYPE:
                 $parser = new CheckboxElementParser();
-                return $parser->parse(new CheckboxElement(), $element);
+                return $parser->parse($element);
             case self::COMMENT_TYPE:
                 $parser = new CommentElementParser();
-                return $parser->parse(new CommentElement(), $element);
+                return $parser->parse($element);
             case self::RADIO_GROUP_TYPE:
                 $parser = new RadiogroupElementParser();
-                return $parser->parse(new RadioGroupElement(), $element);
+                return $parser->parse($element);
             case self::RATING_TYPE:
                 $parser = new RatingElementParser();
-                return $parser->parse(new RatingElement(), $element);
+                return $parser->parse($element);
             default:
                 if ($element->type === $configuration->getType()) {
-                    return $configuration->getParser()->parse($configuration->getElement(), $element);
+
+                    if(get_class($model = $configuration->getParser()->parse($element)) !== get_class($configuration->getElement())){
+                        throw new ElementConfigurationErrorException('Configured model does not correspond to model returned by parser in configuration for type: ' . $configuration->getType());
+                    }
+
+                    return $model;
                 }
                 throw new MissingElementConfigurationException($element->type);
         }

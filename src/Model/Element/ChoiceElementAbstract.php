@@ -2,7 +2,7 @@
 
 namespace SurveyJsPhpSdk\Model\Element;
 
-use SurveyJsPhpSdk\Model\Element\Choice\Choice;
+use SurveyJsPhpSdk\Model\ChoiceModel;
 use SurveyJsPhpSdk\Model\ResultModel;
 
 abstract class ChoiceElementAbstract extends ElementAbstract
@@ -30,14 +30,14 @@ abstract class ChoiceElementAbstract extends ElementAbstract
     }
 
     /**
-     * @return Choice[]
+     * @return ChoiceModel[]
      */
     public function getChoices(): array
     {
         return $this->choices;
     }
 
-    public function addChoice(Choice $choiceToAdd): self
+    public function addChoice(ChoiceModel $choiceToAdd): self
     {
         foreach ($this->choices as $choice) {
             if ($choice->getValue() === $choiceToAdd->getValue()) {
@@ -50,7 +50,7 @@ abstract class ChoiceElementAbstract extends ElementAbstract
         return $this;
     }
 
-    public function removeChoice(Choice $choiceToRemove): self
+    public function removeChoice(ChoiceModel $choiceToRemove): self
     {
         foreach ($this->choices as $index => $choice) {
             if ($choice->getValue() === $choiceToRemove->getValue()) {

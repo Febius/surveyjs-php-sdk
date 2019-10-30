@@ -99,19 +99,19 @@ class SurveyTemplateParser
      */
     private function setDefaultProperties(TemplateModel $model, \stdClass $data): TemplateModel
     {
-        if (isset($templateData->showNavigationButtons)) {
+        if (isset($data->showNavigationButtons)) {
             $model->setShowNavigationButtons($data->showNavigationButtons);
         }
 
-        if (isset($templateData->showPageTitles)) {
+        if (isset($data->showPageTitles)) {
             $model->setShowPageTitles($data->showPageTitles);
         }
 
-        if (isset($templateData->showCompletedPage)) {
+        if (isset($data->showCompletedPage)) {
             $model->setShowCompletedPage($data->showCompletedPage);
         }
 
-        if (isset($templateData->showQuestionNumbers)) {
+        if (isset($data->showQuestionNumbers)) {
             $model->setShowQuestionNumbers($data->showQuestionNumbers);
         }
 

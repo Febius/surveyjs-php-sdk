@@ -5,7 +5,7 @@ namespace SurveyJsPhpSdk\Tests\Model;
 
 
 use PHPUnit\Framework\TestCase;
-use SurveyJsPhpSdk\Model\Element\Choice\Choice;
+use SurveyJsPhpSdk\Model\ChoiceModel;
 use SurveyJsPhpSdk\Model\Element\RatingElement;
 use SurveyJsPhpSdk\Model\ResultModel;
 
@@ -22,9 +22,9 @@ class RatingElementTest extends TestCase
         $this->rating = new RatingElement();
         $this->rating->setName('Great rating question');
 
-        $choice1 = new Choice();
+        $choice1 = new ChoiceModel();
         $choice1->setText('1')->setValue('1');
-        $choice2 = new Choice();
+        $choice2 = new ChoiceModel();
         $choice2->setText('2')->setValue('2');
 
         $this->rating->addChoice($choice1);
