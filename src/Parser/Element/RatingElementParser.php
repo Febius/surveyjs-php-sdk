@@ -2,7 +2,6 @@
 
 namespace SurveyJsPhpSdk\Parser\Element;
 
-use SurveyJsPhpSdk\Exception\InvalidModelGivenToParserException;
 use SurveyJsPhpSdk\Model\Element\ElementInterface;
 use SurveyJsPhpSdk\Model\Element\RatingElement;
 
