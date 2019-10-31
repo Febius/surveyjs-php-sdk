@@ -4,13 +4,12 @@
 namespace SurveyJsPhpSdk\Parser;
 
 use SurveyJsPhpSdk\Exception\InvalidSurveyResultException;
-use SurveyJsPhpSdk\Factory\ResultFactory;
 use SurveyJsPhpSdk\Model\Element\ElementAbstract;
 use SurveyJsPhpSdk\Model\PageModel;
 use SurveyJsPhpSdk\Model\ResultModel;
 use SurveyJsPhpSdk\Model\TemplateModel;
 
-class SurveyResultParser
+class ResultParser
 {
     /**
      * @param TemplateModel $survey
@@ -27,7 +26,6 @@ class SurveyResultParser
         $results = (array)json_decode($jsonResults);
 
         foreach ($results as $question => $result) {
-
             $resultModel = new ResultModel();
             $resultModel->setQuestion($question)->setAnswer($result);
 

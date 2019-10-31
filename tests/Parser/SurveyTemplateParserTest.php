@@ -15,7 +15,7 @@ use SurveyJsPhpSdk\Model\Element\ChoiceElementAbstract;
 use SurveyJsPhpSdk\Model\Element\ElementInterface;
 use SurveyJsPhpSdk\Model\PageModel;
 use SurveyJsPhpSdk\Model\TemplateModel;
-use SurveyJsPhpSdk\Parser\SurveyTemplateParser;
+use SurveyJsPhpSdk\Parser\TemplateParser;
 use SurveyJsPhpSdk\Tests\Fake\FakeCustomElementModel;
 use SurveyJsPhpSdk\Tests\Fake\FakeCustomElementParser;
 
@@ -141,14 +141,14 @@ class SurveyTemplateParserTest extends TestCase
             }';
 
     /**
-     * @var SurveyTemplateParser
+     * @var TemplateParser
      */
     private $sut;
 
     protected function setUp()
     {
         $conf = new ElementConfiguration('custom_element', new FakeCustomElementModel(), new FakeCustomElementParser());
-        $this->sut = new SurveyTemplateParser([$conf]);
+        $this->sut = new TemplateParser([$conf]);
     }
 
     public function testParseSuccess(){
@@ -182,7 +182,7 @@ class SurveyTemplateParserTest extends TestCase
     {
         $this->expectException(InvalidElementConfigurationException::class);
 
-        new SurveyTemplateParser(['something clearly wrong']);
+        new TemplateParser(['something clearly wrong']);
     }
 
     public function testParseRaisePageDataNotFoundException(){

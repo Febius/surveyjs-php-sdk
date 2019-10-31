@@ -8,10 +8,9 @@ use SurveyJsPhpSdk\Exception\InvalidElementConfigurationException;
 use SurveyJsPhpSdk\Exception\MissingElementConfigurationException;
 use SurveyJsPhpSdk\Exception\PageDataNotFoundException;
 use SurveyJsPhpSdk\Factory\ElementFactory;
-use SurveyJsPhpSdk\Factory\PageFactory;
 use SurveyJsPhpSdk\Model\TemplateModel;
 
-class SurveyTemplateParser
+class TemplateParser
 {
     /**
      * @var ElementConfiguration[]
@@ -38,6 +37,7 @@ class SurveyTemplateParser
      * @throws ElementTypeNotFoundException
      * @throws MissingElementConfigurationException
      * @throws PageDataNotFoundException
+     * @throws \SurveyJsPhpSdk\Exception\ElementConfigurationErrorException
      *
      * @return TemplateModel
      */
@@ -52,7 +52,7 @@ class SurveyTemplateParser
         $surveyTemplateModel = new TemplateModel();
 
         foreach ($template->pages as $page) {
-            $pageModel = (new SurveyPageParser())->parse($page);
+            $pageModel = (new PageParser())->parse($page);
 
             foreach ($page->elements as $element) {
                 $config = $this->getConfigForElement($element);

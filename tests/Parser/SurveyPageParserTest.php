@@ -6,7 +6,7 @@ namespace SurveyJsPhpSdk\Tests\Parser;
 
 use PHPUnit\Framework\TestCase;
 use SurveyJsPhpSdk\Model\PageModel;
-use SurveyJsPhpSdk\Parser\SurveyPageParser;
+use SurveyJsPhpSdk\Parser\PageParser;
 
 class SurveyPageParserTest extends TestCase
 {
@@ -15,7 +15,7 @@ class SurveyPageParserTest extends TestCase
      */
     private $page;
     /**
-     * @var SurveyPageParser
+     * @var PageParser
      */
     private $sut;
 
@@ -25,7 +25,7 @@ class SurveyPageParserTest extends TestCase
             'name' => 'test_page'
         ];
 
-        $this->sut = new SurveyPageParser();
+        $this->sut = new PageParser();
     }
 
     public function testParseSuccess()

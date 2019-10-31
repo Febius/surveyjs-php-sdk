@@ -7,8 +7,8 @@ namespace SurveyJsPhpSdk\Tests\Parser;
 use PHPUnit\Framework\TestCase;
 use SurveyJsPhpSdk\Exception\InvalidSurveyResultException;
 use SurveyJsPhpSdk\Model\ResultModel;
-use SurveyJsPhpSdk\Parser\SurveyResultParser;
-use SurveyJsPhpSdk\Parser\SurveyTemplateParser;
+use SurveyJsPhpSdk\Parser\ResultParser;
+use SurveyJsPhpSdk\Parser\TemplateParser;
 
 class SurveyResultParserTest extends TestCase
 {
@@ -83,19 +83,19 @@ class SurveyResultParserTest extends TestCase
     private $testCaseFail2 = '{"question5":"2","question2":"2","question3":"some extra notes","question4":"1"}';
 
     /**
-     * @var SurveyResultParser
+     * @var ResultParser
      */
     private $sut;
 
 
     protected function setUp()
     {
-        $this->sut = new SurveyResultParser();
+        $this->sut = new ResultParser();
     }
 
     public function testParseToModel(){
 
-        $models = $this->sut->parse((new SurveyTemplateParser)->parse($this->templateJson), $this->testCaseSuccess);
+        $models = $this->sut->parse((new TemplateParser)->parse($this->templateJson), $this->testCaseSuccess);
 
         $testCase = (array)json_decode($this->testCaseSuccess);
 
@@ -113,12 +113,12 @@ class SurveyResultParserTest extends TestCase
     public function testParseToModelRaiseExceptionWrongAnswer(){
         $this->expectException(InvalidSurveyResultException::class);
 
-        $this->sut->parse((new SurveyTemplateParser)->parse($this->templateJson), $this->testCaseFail1);
+        $this->sut->parse((new TemplateParser)->parse($this->templateJson), $this->testCaseFail1);
     }
 
     public function testParseToModelRaiseExceptionWrongQuestion(){
         $this->expectException(InvalidSurveyResultException::class);
 
-        $this->sut->parse((new SurveyTemplateParser)->parse($this->templateJson), $this->testCaseFail2);
+        $this->sut->parse((new TemplateParser)->parse($this->templateJson), $this->testCaseFail2);
     }
 }

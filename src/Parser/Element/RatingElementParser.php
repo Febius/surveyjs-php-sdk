@@ -5,7 +5,7 @@ namespace SurveyJsPhpSdk\Parser\Element;
 use SurveyJsPhpSdk\Model\Element\ElementInterface;
 use SurveyJsPhpSdk\Model\Element\RatingElement;
 
-class RatingElementParser extends ChoiceSurveyElementParserAbstract
+class RatingElementParser extends ChoiceElementParserAbstract
 {
     public function parse(\stdClass $data): ElementInterface
     {
