@@ -2,7 +2,7 @@
 
 namespace SurveyJsPhpSdk\Parser\Element;
 
-abstract class DefaultSurveyElementParserAbstract extends ElementParserAbstract
+abstract class DefaultElementParserAbstract extends ElementParserAbstract
 {
 
     protected function configure(\stdClass $data): void

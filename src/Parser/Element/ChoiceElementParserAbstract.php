@@ -5,15 +5,15 @@ namespace SurveyJsPhpSdk\Parser\Element;
 use SurveyJsPhpSdk\Factory\ChoiceFactory;
 use SurveyJsPhpSdk\Model\Element\ChoiceElementAbstract;
 use SurveyJsPhpSdk\Model\Element\ElementInterface;
-use SurveyJsPhpSdk\Parser\SurveyChoiceParser;
+use SurveyJsPhpSdk\Parser\ChoiceParser;
 
-abstract class ChoiceSurveyElementParserAbstract extends DefaultSurveyElementParserAbstract
+abstract class ChoiceElementParserAbstract extends DefaultElementParserAbstract
 {
     /**
      * @param \stdClass $data
      * @return ElementInterface
      */
-    public function parse( \stdClass $data): ElementInterface
+    public function parse(\stdClass $data): ElementInterface
     {
         $this->configure($data);
 
@@ -21,7 +21,7 @@ abstract class ChoiceSurveyElementParserAbstract extends DefaultSurveyElementPar
             $this->element->setChoicesOrder($data->choicesOrder);
         }
 
-        $choiceParser = new SurveyChoiceParser();
+        $choiceParser = new ChoiceParser();
 
         foreach ($this->getChoicesData($data) as $value) {
             $choiceData = $this->formatChoiceObject($value);
@@ -43,7 +43,7 @@ abstract class ChoiceSurveyElementParserAbstract extends DefaultSurveyElementPar
     }
 
     /**
-     * @param $value
+     * @param \stdClass|string $value
      *
      * @return \stdClass
      */

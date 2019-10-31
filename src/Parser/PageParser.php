@@ -3,10 +3,9 @@
 
 namespace SurveyJsPhpSdk\Parser;
 
-
 use SurveyJsPhpSdk\Model\PageModel;
 
-class SurveyPageParser
+class PageParser
 {
     public function parse(\stdClass $data): PageModel
     {

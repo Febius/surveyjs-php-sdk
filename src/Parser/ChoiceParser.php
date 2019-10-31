@@ -3,10 +3,9 @@
 
 namespace SurveyJsPhpSdk\Parser;
 
-
 use SurveyJsPhpSdk\Model\ChoiceModel;
 
-class SurveyChoiceParser
+class ChoiceParser
 {
 
     public function parse(\stdClass $data): ChoiceModel

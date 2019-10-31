@@ -3,7 +3,6 @@
 
 namespace SurveyJsPhpSdk\Exception;
 
-
 class ElementNameNotFoundException extends \Exception
 {
     protected $message = 'The property "name" is required for all elements. This element has none: ';
