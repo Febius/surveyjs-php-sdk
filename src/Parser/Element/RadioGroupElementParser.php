@@ -6,7 +6,7 @@ namespace SurveyJsPhpSdk\Parser\Element;
 use SurveyJsPhpSdk\Model\Element\ElementInterface;
 use SurveyJsPhpSdk\Model\Element\RadioGroupElement;
 
-class RadiogroupElementParser extends ChoiceSurveyElementParserAbstract
+class RadioGroupElementParser extends ChoiceSurveyElementParserAbstract
 {
     public function parse(\stdClass $data): ElementInterface
     {

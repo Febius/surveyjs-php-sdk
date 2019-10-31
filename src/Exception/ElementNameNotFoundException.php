@@ -3,9 +3,10 @@
 
 namespace SurveyJsPhpSdk\Exception;
 
-class InvalidModelGivenToParserException extends \Exception
+
+class ElementNameNotFoundException extends \Exception
 {
-    protected $message = 'Model passed to parser is invalid: ';
+    protected $message = 'The property "name" is required for all elements. This element has none: ';
 
     public function __construct($message = "", $code = 0, \Throwable $previous = null)
     {

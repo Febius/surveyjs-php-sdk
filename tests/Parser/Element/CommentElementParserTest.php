@@ -5,6 +5,7 @@ namespace SurveyJsPhpSdk\Tests\Parser\Element;
 
 
 use PHPStan\Testing\TestCase;
+use SurveyJsPhpSdk\Exception\ElementNameNotFoundException;
 use SurveyJsPhpSdk\Factory\ElementFactory;
 use SurveyJsPhpSdk\Model\Element\CommentElement;
 use SurveyJsPhpSdk\Parser\Element\CommentElementParser;
@@ -43,5 +44,14 @@ class CommentElementParserTest extends TestCase
         $this->assertEquals($this->element->title, $model->getTitle());
         $this->assertEquals($this->element->isRequired, $model->isRequired());
         $this->assertEquals($this->element->enableIf, $model->getEnableIf());
+    }
+
+    public function testParseRaiseException()
+    {
+        $this->expectException(ElementNameNotFoundException::class);
+        $this->expectExceptionMessage('The property "name" is required for all elements. This element has none: ' . ElementFactory::COMMENT_TYPE);
+
+        unset($this->element->name);
+        $this->sut->parse($this->element);
     }
 }
