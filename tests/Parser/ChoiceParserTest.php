@@ -6,16 +6,16 @@ namespace SurveyJsPhpSdk\Tests\Parser;
 
 use PHPUnit\Framework\TestCase;
 use SurveyJsPhpSdk\Model\ChoiceModel;
-use SurveyJsPhpSdk\Parser\SurveyChoiceParser;
+use SurveyJsPhpSdk\Parser\ChoiceParser;
 
-class SurveyChoiceParserTest extends TestCase
+class ChoiceParserTest extends TestCase
 {
     /**
      * @var object
      */
     private $choice;
     /**
-     * @var SurveyChoiceParser
+     * @var ChoiceParser
      */
     private $sut;
 
@@ -26,7 +26,7 @@ class SurveyChoiceParserTest extends TestCase
             'value' => 'some_value'
         ];
 
-        $this->sut = new SurveyChoiceParser();
+        $this->sut = new ChoiceParser();
     }
 
     public function testParseSuccess()

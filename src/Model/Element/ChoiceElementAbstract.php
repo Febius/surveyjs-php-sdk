@@ -13,7 +13,7 @@ abstract class ChoiceElementAbstract extends ElementAbstract
     private $choicesOrder;
 
     /**
-     * @var Choice[]
+     * @var ChoiceModel[]
      */
     private $choices = [];
 
