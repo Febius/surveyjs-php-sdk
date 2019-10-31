@@ -14,7 +14,7 @@ use SurveyJsPhpSdk\Parser\Element\CheckboxElementParser;
 use SurveyJsPhpSdk\Parser\Element\CommentElementParser;
 use SurveyJsPhpSdk\Parser\Element\DefaultChoiceElementParser;
 use SurveyJsPhpSdk\Parser\Element\DefaultSurveyElementParserAbstract;
-use SurveyJsPhpSdk\Parser\Element\RadiogroupElementParser;
+use SurveyJsPhpSdk\Parser\Element\RadioGroupElementParser;
 use SurveyJsPhpSdk\Parser\Element\RatingElementParser;
 
 class ElementFactory
@@ -50,14 +50,14 @@ class ElementFactory
                 $parser = new CommentElementParser();
                 return $parser->parse($element);
             case self::RADIO_GROUP_TYPE:
-                $parser = new RadiogroupElementParser();
+                $parser = new RadioGroupElementParser();
                 return $parser->parse($element);
             case self::RATING_TYPE:
                 $parser = new RatingElementParser();
                 return $parser->parse($element);
             default:
                 if ($element->type === $configuration->getType()) {
-
+                    //checking that custom element parser returns the correct custom element model as in configuration
                     if(get_class($model = $configuration->getParser()->parse($element)) !== get_class($configuration->getElement())){
                         throw new ElementConfigurationErrorException('Configured model does not correspond to model returned by parser in configuration for type: ' . $configuration->getType());
                     }

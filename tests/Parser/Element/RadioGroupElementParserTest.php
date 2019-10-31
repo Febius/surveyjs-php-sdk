@@ -8,9 +8,9 @@ use PHPUnit\Framework\TestCase;
 use SurveyJsPhpSdk\Factory\ElementFactory;
 use SurveyJsPhpSdk\Model\ChoiceModel;
 use SurveyJsPhpSdk\Model\Element\RadioGroupElement;
-use SurveyJsPhpSdk\Parser\Element\RadiogroupElementParser;
+use SurveyJsPhpSdk\Parser\Element\RadioGroupElementParser;
 
-class RadiogroupElementParserTest extends TestCase
+class RadioGroupElementParserTest extends TestCase
 {
 
     /**
@@ -18,7 +18,7 @@ class RadiogroupElementParserTest extends TestCase
      */
     private $element;
     /**
-     * @var RadiogroupElementParser
+     * @var RadioGroupElementParser
      */
     private $sut;
 
@@ -44,7 +44,7 @@ class RadiogroupElementParserTest extends TestCase
             'choices'      => [$choice1, $choice2, 'item3']
         ];
 
-        $this->sut = new RadiogroupElementParser();
+        $this->sut = new RadioGroupElementParser();
     }
 
     public function testParseSuccess()
