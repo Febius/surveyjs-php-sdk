@@ -4,14 +4,11 @@
 namespace SurveyJsPhpSdk\Parser\Element;
 
 use SurveyJsPhpSdk\Model\Element\CommentElement;
-use SurveyJsPhpSdk\Model\Element\ElementInterface;
 
 class CommentElementParser extends DefaultElementParserAbstract
 {
-    public function parse(\stdClass $data): ElementInterface
+    protected function setupElement(): void
     {
         $this->element = new CommentElement();
-
-        return parent::parse($data);
     }
 }

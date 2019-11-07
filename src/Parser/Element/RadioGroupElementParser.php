@@ -3,15 +3,12 @@
 
 namespace SurveyJsPhpSdk\Parser\Element;
 
-use SurveyJsPhpSdk\Model\Element\ElementInterface;
 use SurveyJsPhpSdk\Model\Element\RadioGroupElement;
 
 class RadioGroupElementParser extends ChoiceElementParserAbstract
 {
-    public function parse(\stdClass $data): ElementInterface
+    protected function setupElement(): void
     {
         $this->element = new RadioGroupElement();
-
-        return parent::parse($data);
     }
 }
