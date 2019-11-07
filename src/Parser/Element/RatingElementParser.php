@@ -2,16 +2,14 @@
 
 namespace SurveyJsPhpSdk\Parser\Element;
 
-use SurveyJsPhpSdk\Model\Element\ElementInterface;
 use SurveyJsPhpSdk\Model\Element\RatingElement;
 
 class RatingElementParser extends ChoiceElementParserAbstract
 {
-    public function parse(\stdClass $data): ElementInterface
+
+    protected function setupElement(): void
     {
         $this->element = new RatingElement();
-
-        return parent::parse($data);
     }
 
     protected function getChoicesData(\stdClass $data): array
@@ -39,4 +37,5 @@ class RatingElementParser extends ChoiceElementParserAbstract
 
         return $choicesData;
     }
+
 }
