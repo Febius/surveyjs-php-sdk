@@ -15,6 +15,8 @@ abstract class ChoiceElementParserAbstract extends DefaultElementParserAbstract
      */
     public function parse(\stdClass $data): ElementInterface
     {
+        $this->setupElement();
+
         $this->configure($data);
 
         if (isset($data->choicesOrder)) {

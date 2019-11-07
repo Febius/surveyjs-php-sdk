@@ -20,8 +20,12 @@ abstract class ElementParserAbstract implements ElementParserInterface
 
     public function parse(\stdClass $data): ElementInterface
     {
+        $this->setupElement();
+
         $this->configure($data);
 
         return $this->element;
     }
+
+    protected abstract function setupElement(): void;
 }
