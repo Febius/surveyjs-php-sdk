@@ -16,6 +16,7 @@ use SurveyJsPhpSdk\Model\Element\ElementInterface;
 use SurveyJsPhpSdk\Model\PageModel;
 use SurveyJsPhpSdk\Model\TemplateModel;
 use SurveyJsPhpSdk\Parser\TemplateParser;
+use SurveyJsPhpSdk\Tests\Fake\FakeCustomElementConfiguration;
 use SurveyJsPhpSdk\Tests\Fake\FakeCustomElementModel;
 use SurveyJsPhpSdk\Tests\Fake\FakeCustomElementParser;
 
@@ -46,7 +47,7 @@ class SurveyTemplateParserTest extends TestCase
                       "choicesOrder": "asc"
                     },
                     {
-                      "type": "custom_element",
+                      "type": "custom_test_element_type",
                       "name": "question2"
                     }
                   ]
@@ -147,7 +148,7 @@ class SurveyTemplateParserTest extends TestCase
 
     protected function setUp()
     {
-        $conf = new ElementConfiguration('custom_element', new FakeCustomElementModel(), new FakeCustomElementParser());
+        $conf = new FakeCustomElementConfiguration();
         $this->sut = new TemplateParser([$conf]);
     }
 

@@ -95,7 +95,7 @@ class SurveyResultParserTest extends TestCase
 
     public function testParseToModel(){
 
-        $models = $this->sut->parse((new TemplateParser)->parse($this->templateJson), $this->testCaseSuccess);
+        $models = $this->sut->parse((new TemplateParser())->parse($this->templateJson), $this->testCaseSuccess);
 
         $testCase = (array)json_decode($this->testCaseSuccess);
 

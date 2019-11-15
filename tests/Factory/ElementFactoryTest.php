@@ -5,7 +5,7 @@ namespace SurveyJsPhpSdk\Tests\Factory;
 
 
 use PHPUnit\Framework\TestCase;
-use SurveyJsPhpSdk\Configuration\ElementConfiguration;
+use SurveyJsPhpSdk\Configuration\ElementConfigurationInterface;
 use SurveyJsPhpSdk\Exception\ElementConfigurationErrorException;
 use SurveyJsPhpSdk\Exception\MissingElementConfigurationException;
 use SurveyJsPhpSdk\Factory\ElementFactory;
@@ -14,8 +14,8 @@ use SurveyJsPhpSdk\Model\Element\CommentElement;
 use SurveyJsPhpSdk\Model\Element\RadioGroupElement;
 use SurveyJsPhpSdk\Model\Element\RatingElement;
 use SurveyJsPhpSdk\Parser\Element\CommentElementParser;
+use SurveyJsPhpSdk\Tests\Fake\FakeCustomElementConfiguration;
 use SurveyJsPhpSdk\Tests\Fake\FakeCustomElementModel;
-use SurveyJsPhpSdk\Tests\Fake\FakeCustomElementParser;
 
 class ElementFactoryTest extends TestCase
 {
@@ -135,7 +135,7 @@ class ElementFactoryTest extends TestCase
     }
 
     public function testCreateCustomElementSuccess(){
-        $conf = new ElementConfiguration('custom_test_element_type', new FakeCustomElementModel(), new FakeCustomElementParser());
+        $conf = new FakeCustomElementConfiguration();
 
         $model = ElementFactory::create($this->customElement, $conf);
 
@@ -146,7 +146,10 @@ class ElementFactoryTest extends TestCase
         $this->expectException(ElementConfigurationErrorException::class);
         $this->expectExceptionMessage('Configured model does not correspond to model returned by parser in configuration for type: custom_test_element_type');
 
-        $conf = new ElementConfiguration('custom_test_element_type', new FakeCustomElementModel(), new CommentElementParser());
+        $conf = $this->createMock(ElementConfigurationInterface::class);
+        $conf->method('getType')->willReturn('custom_test_element_type');
+        $conf->method('getElement')->willReturn(new FakeCustomElementModel());
+        $conf->method('getParser')->willReturn(new CommentElementParser());
 
         ElementFactory::create($this->customElement, $conf);
     }
@@ -154,7 +157,7 @@ class ElementFactoryTest extends TestCase
     public function testCreateRaiseMissingConfigurationException(){
         $this->expectException(MissingElementConfigurationException::class);
 
-        $conf = new ElementConfiguration('custom_test_element_type', new FakeCustomElementModel(), new FakeCustomElementParser());
+        $conf = new FakeCustomElementConfiguration();
 
         ElementFactory::create($this->unknownElement, $conf);
     }
