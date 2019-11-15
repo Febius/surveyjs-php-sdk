@@ -37,5 +37,4 @@ class RatingElementParser extends ChoiceElementParserAbstract
 
         return $choicesData;
     }
-
 }

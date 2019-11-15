@@ -2,18 +2,12 @@
 
 namespace SurveyJsPhpSdk\Factory;
 
-use SurveyJsPhpSdk\Configuration\ElementConfiguration;
+use SurveyJsPhpSdk\Configuration\ElementConfigurationInterface;
 use SurveyJsPhpSdk\Exception\ElementConfigurationErrorException;
 use SurveyJsPhpSdk\Exception\MissingElementConfigurationException;
-use SurveyJsPhpSdk\Model\Element\CheckboxElement;
-use SurveyJsPhpSdk\Model\Element\CommentElement;
 use SurveyJsPhpSdk\Model\Element\ElementInterface;
-use SurveyJsPhpSdk\Model\Element\RadioGroupElement;
-use SurveyJsPhpSdk\Model\Element\RatingElement;
 use SurveyJsPhpSdk\Parser\Element\CheckboxElementParser;
 use SurveyJsPhpSdk\Parser\Element\CommentElementParser;
-use SurveyJsPhpSdk\Parser\Element\DefaultChoiceElementParser;
-use SurveyJsPhpSdk\Parser\Element\DefaultElementParserAbstract;
 use SurveyJsPhpSdk\Parser\Element\RadioGroupElementParser;
 use SurveyJsPhpSdk\Parser\Element\RatingElementParser;
 
@@ -33,14 +27,14 @@ class ElementFactory
 
     /**
      * @param \stdClass $element
-     * @param ElementConfiguration|null $configuration
+     * @param ElementConfigurationInterface|null $configuration
      *
      * @throws ElementConfigurationErrorException
      * @throws MissingElementConfigurationException
      *
      * @return ElementInterface
      */
-    public static function create(\stdClass $element, ?ElementConfiguration $configuration): ElementInterface
+    public static function create(\stdClass $element, ?ElementConfigurationInterface $configuration): ElementInterface
     {
         switch ($element->type) {
             case self::CHECKBOX_TYPE:

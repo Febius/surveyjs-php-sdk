@@ -2,7 +2,8 @@
 
 namespace SurveyJsPhpSdk\Parser;
 
-use SurveyJsPhpSdk\Configuration\ElementConfiguration;
+use SurveyJsPhpSdk\Configuration\ElementConfigurationInterface;
+use SurveyJsPhpSdk\Exception\ElementConfigurationErrorException;
 use SurveyJsPhpSdk\Exception\ElementTypeNotFoundException;
 use SurveyJsPhpSdk\Exception\InvalidElementConfigurationException;
 use SurveyJsPhpSdk\Exception\MissingElementConfigurationException;
@@ -13,18 +14,21 @@ use SurveyJsPhpSdk\Model\TemplateModel;
 class TemplateParser
 {
     /**
-     * @var ElementConfiguration[]
+     * @var ElementConfigurationInterface[]
      */
     private $customConfigurations = [];
 
     /**
-     * @param ElementConfiguration[] $customConfigurations
+     * TemplateParser constructor.
+     *
+     * @param iterable $customConfigurations
+     *
      * @throws InvalidElementConfigurationException
      */
-    public function __construct($customConfigurations = array())
+    public function __construct(iterable $customConfigurations = [])
     {
         foreach ($customConfigurations as $customConfiguration) {
-            if (($customConfiguration instanceof ElementConfiguration) === false) {
+            if (($customConfiguration instanceof ElementConfigurationInterface) === false) {
                 throw new InvalidElementConfigurationException();
             }
             $this->customConfigurations[$customConfiguration->getType()] = $customConfiguration;
@@ -37,7 +41,7 @@ class TemplateParser
      * @throws ElementTypeNotFoundException
      * @throws MissingElementConfigurationException
      * @throws PageDataNotFoundException
-     * @throws \SurveyJsPhpSdk\Exception\ElementConfigurationErrorException
+     * @throws ElementConfigurationErrorException
      *
      * @return TemplateModel
      */
@@ -72,9 +76,9 @@ class TemplateParser
      * @throws ElementTypeNotFoundException
      * @throws MissingElementConfigurationException
      *
-     * @return ElementConfiguration|null
+     * @return ElementConfigurationInterface|null
      */
-    private function getConfigForElement(\stdClass $element): ?ElementConfiguration
+    private function getConfigForElement(\stdClass $element): ?ElementConfigurationInterface
     {
         if (!isset($element->type)) {
             throw new ElementTypeNotFoundException();

@@ -27,5 +27,5 @@ abstract class ElementParserAbstract implements ElementParserInterface
         return $this->element;
     }
 
-    protected abstract function setupElement(): void;
+    abstract protected function setupElement(): void;
 }
