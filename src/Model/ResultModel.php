@@ -10,7 +10,7 @@ class ResultModel
     private $question;
 
     /**
-     * @var string
+     * @var string|array
      */
     private $answer;
 
@@ -26,12 +26,19 @@ class ResultModel
         return $this;
     }
 
-    public function getAnswer(): string
+    /**
+     * @return string|array
+     */
+    public function getAnswer()
     {
         return $this->answer;
     }
 
-    public function setAnswer(string $answer): self
+    /**
+     * @param string|array $answer
+     * @return $this
+     */
+    public function setAnswer($answer): self
     {
         $this->answer = $answer;
 
