@@ -64,11 +64,13 @@ abstract class ChoiceElementAbstract extends ElementAbstract
 
     public function isValidResult(ResultModel $result): bool
     {
-        if (parent::isValidResult($result)) {
-            foreach ($this->getChoices() as $choice) {
-                if ($choice->getValue() === $result->getAnswer()) {
-                    return true;
-                }
+        if (!parent::isValidResult($result)) {
+            return false;
+        }
+
+        foreach ($this->getChoices() as $choice) {
+            if ($choice->getValue() === $result->getAnswer()) {
+                return true;
             }
         }
 

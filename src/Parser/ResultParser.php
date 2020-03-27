@@ -30,7 +30,7 @@ class ResultParser
             $resultModel->setQuestion($question)->setAnswer($result);
 
             if (!self::validateResult($survey->getPages(), $resultModel)) {
-                throw new InvalidSurveyResultException($resultModel->getQuestion() . ' => ' . $resultModel->getAnswer());
+                throw new InvalidSurveyResultException(json_encode([$resultModel->getQuestion() => $resultModel->getAnswer()]));
             }
 
             $resultsModels[] = $resultModel;

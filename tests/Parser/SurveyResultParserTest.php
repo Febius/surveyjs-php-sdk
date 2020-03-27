@@ -78,9 +78,9 @@ class SurveyResultParserTest extends TestCase
               "showQuestionNumbers": "off"
             }';
 
-    private $testCaseSuccess = '{"question1":"2","question2":"2","question3":"some extra notes","question4":"1"}';
-    private $testCaseFail1 = '{"question1":"3","question2":"2","question3":"some extra notes","question4":"1"}';
-    private $testCaseFail2 = '{"question5":"2","question2":"2","question3":"some extra notes","question4":"1"}';
+    private $testCaseSuccess = '{"question1":"2","question2":["2"],"question3":"some extra notes","question4":"1"}';
+    private $testCaseFail1 = '{"question1":"3","question2":["2"],"question3":"some extra notes","question4":"1"}';
+    private $testCaseFail2 = '{"question5":"2","question2":["2"],"question3":"some extra notes","question4":"1"}';
 
     /**
      * @var ResultParser
