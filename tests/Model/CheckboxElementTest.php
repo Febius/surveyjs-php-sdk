@@ -29,6 +29,7 @@ class CheckboxElementTest extends TestCase
         $this->checkbox = new CheckboxElement();
         $this->checkbox->addChoice($choice1)->addChoice($choice2)->addChoice($choice3);
         $this->checkbox->setName('test');
+        $this->checkbox->setHasOther(true);
     }
 
     public function testIsValidResultTrue()
@@ -36,6 +37,14 @@ class CheckboxElementTest extends TestCase
         $result = new ResultModel();
         $result->setQuestion('test');
         $result->setAnswer(['bad', 'good']);
+
+        $this->assertTrue($this->checkbox->isValidResult($result));
+    }
+    public function testIsValidResultHasOtherTrue()
+    {
+        $result = new ResultModel();
+        $result->setQuestion('test-Comment');
+        $result->setAnswer("something else");
 
         $this->assertTrue($this->checkbox->isValidResult($result));
     }

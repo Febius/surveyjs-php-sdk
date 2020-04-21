@@ -40,7 +40,8 @@ class CheckboxElementParserTest extends TestCase
             'isRequired'   => false,
             'choicesOrder' => 'desc',
             'enableIf'     => 'implausible conditions',
-            'choices'      => [$choice1, $choice2, 'item3']
+            'choices'      => [$choice1, $choice2, 'item3'],
+            'otherText'    => 'other'
         ];
 
         $this->sut = new CheckboxElementParser();
@@ -55,6 +56,7 @@ class CheckboxElementParserTest extends TestCase
         $this->assertEquals($this->element->title, $model->getTitle());
         $this->assertEquals($this->element->isRequired, $model->isRequired());
         $this->assertEquals($this->element->enableIf, $model->getEnableIf());
+        $this->assertTrue($model->hasOther());
 
         foreach($model->getChoices() as $choice){
             $this->assertInstanceOf(ChoiceModel::class, $choice);

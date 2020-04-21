@@ -9,11 +9,14 @@ class CheckboxElement extends ChoiceElementAbstract
 {
     public function isValidResult(ResultModel $result): bool
     {
-        if(!is_array($result->getAnswer())){
+        if ($this->getName() !== $result->getQuestion()) {
+            if($this->isOtherResponse($result)){
+                return true;
+            }
             return false;
         }
 
-        if ($this->getName() !== $result->getQuestion()) {
+        if(!is_array($result->getAnswer())){
             return false;
         }
 
