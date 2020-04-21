@@ -17,6 +17,11 @@ abstract class ChoiceElementAbstract extends ElementAbstract
      */
     private $choices = [];
 
+    /**
+     * @var bool
+     */
+    private $hasOther = false;
+
     public function getChoicesOrder(): string
     {
         return $this->choicesOrder;
@@ -62,9 +67,25 @@ abstract class ChoiceElementAbstract extends ElementAbstract
         return $this;
     }
 
+    public function setHasOther(bool $hasOther): self
+    {
+        $this->hasOther = $hasOther;
+
+        return $this;
+    }
+
+    public function hasOther(): bool
+    {
+        return $this->hasOther;
+    }
+
     public function isValidResult(ResultModel $result): bool
     {
         if (!parent::isValidResult($result)) {
+            if($this->isOtherResponse($result)){
+                return true;
+            }
+
             return false;
         }
 
@@ -75,5 +96,10 @@ abstract class ChoiceElementAbstract extends ElementAbstract
         }
 
         return false;
+    }
+
+    protected function isOtherResponse(ResultModel $result): bool
+    {
+        return $this->hasOther() && $result->getQuestion() === $this->getName() . '-Comment';
     }
 }
