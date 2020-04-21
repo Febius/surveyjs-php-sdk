@@ -33,6 +33,7 @@ abstract class ChoiceElementParserAbstract extends DefaultElementParserAbstract
 
         if(isset($data->otherText)){
             $this->element->setHasOther(true);
+            $this->element->addChoice($choiceParser->parse($this->formatChoiceObject('other')));
         }
 
         return $this->element;
