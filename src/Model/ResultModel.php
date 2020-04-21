@@ -44,4 +44,9 @@ class ResultModel
 
         return $this;
     }
+
+    public function isMultipleChoiceAnswer(): bool
+    {
+        return is_array($this->answer);
+    }
 }

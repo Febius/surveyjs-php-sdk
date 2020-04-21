@@ -16,7 +16,7 @@ class CheckboxElement extends ChoiceElementAbstract
             return false;
         }
 
-        if(!is_array($result->getAnswer())){
+        if(!$result->isMultipleChoiceAnswer()){
             return false;
         }
 

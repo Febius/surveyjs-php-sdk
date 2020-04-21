@@ -2,7 +2,7 @@
   "name": "febius/surveyjs-php-sdk",
   "description": "Survey Js JSON schema parser and modelling sdk",
   "license": "MIT",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "authors": [
     {
       "name": "Fabio Mosca",
