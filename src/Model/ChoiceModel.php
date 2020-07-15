@@ -10,7 +10,7 @@ class ChoiceModel
     private $value;
 
     /**
-     * @var string
+     * @var TextModel
      */
     private $text;
 
@@ -26,12 +26,12 @@ class ChoiceModel
         return $this;
     }
 
-    public function getText(): string
+    public function getText(): TextModel
     {
         return $this->text;
     }
 
-    public function setText(string $text): self
+    public function setText(TextModel $text): self
     {
         $this->text = $text;
 

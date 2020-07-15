@@ -2,6 +2,8 @@
 
 namespace SurveyJsPhpSdk\Parser\Element;
 
+use SurveyJsPhpSdk\Parser\TextParser;
+
 abstract class DefaultElementParserAbstract extends ElementParserAbstract
 {
 
@@ -10,7 +12,8 @@ abstract class DefaultElementParserAbstract extends ElementParserAbstract
         parent::configure($data);
 
         if (isset($data->title)) {
-            $this->element->setTitle($data->title);
+            $textParser = new TextParser();
+            $this->element->setTitle($textParser->parse($data->title));
         }
 
         if (isset($data->isRequired)) {
