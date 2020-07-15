@@ -34,7 +34,7 @@ class ChoiceParserTest extends TestCase
         $model = $this->sut->parse($this->choice);
 
         $this->assertInstanceOf(ChoiceModel::class, $model);
-        $this->assertEquals('some_text', $model->getText());
+        $this->assertEquals('some_text', $model->getText()->getDefaultValue());
         $this->assertEquals('some_value', $model->getValue());
     }
 }

@@ -2,8 +2,6 @@
 
 namespace SurveyJsPhpSdk\Parser\Element;
 
-use SurveyJsPhpSdk\Factory\ChoiceFactory;
-use SurveyJsPhpSdk\Model\Element\ChoiceElementAbstract;
 use SurveyJsPhpSdk\Model\Element\ElementInterface;
 use SurveyJsPhpSdk\Parser\ChoiceParser;
 
@@ -31,9 +29,14 @@ abstract class ChoiceElementParserAbstract extends DefaultElementParserAbstract
             $this->element->addChoice($choiceParser->parse($choiceData));
         }
 
-        if(isset($data->otherText)){
+        if (isset($data->otherText)) {
             $this->element->setHasOther(true);
-            $this->element->addChoice($choiceParser->parse($this->formatChoiceObject('other')));
+
+            $this->element->addChoice($choiceParser->parse($this->formatChoiceObject(
+                is_string($data->otherText)
+                    ? 'other'
+                    : (object)['text' => $data->otherText, 'value' => 'other']
+            )));
         }
 
         return $this->element;
@@ -50,12 +53,12 @@ abstract class ChoiceElementParserAbstract extends DefaultElementParserAbstract
     }
 
     /**
-     * @param \stdClass|string $value
+     * @param \stdClass|string|number $value
      *
      * @return \stdClass
      */
     protected function formatChoiceObject($value): \stdClass
     {
-        return ! is_object($value) ? (object)['text' => $value, 'value' => $value] : $value;
+        return !is_object($value) ? (object)['text' => strval($value), 'value' => $value] : $value;
     }
 }

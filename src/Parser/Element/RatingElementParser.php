@@ -24,10 +24,7 @@ class RatingElementParser extends ChoiceElementParserAbstract
             }
 
             for ($i = 1; $i <= $max; $i++) {
-                $choicesData[] = (object)[
-                    'text'  => $i,
-                    'value' => $i
-                ];
+                $choicesData[] = $this->formatChoiceObject($i);
             }
         } else {
             foreach ($data->rateValues as $value) {

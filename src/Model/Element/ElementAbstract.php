@@ -3,6 +3,7 @@
 namespace SurveyJsPhpSdk\Model\Element;
 
 use SurveyJsPhpSdk\Model\ResultModel;
+use SurveyJsPhpSdk\Model\TextModel;
 
 abstract class ElementAbstract implements ElementInterface
 {
@@ -12,7 +13,7 @@ abstract class ElementAbstract implements ElementInterface
     private $name;
 
     /**
-     * @var string
+     * @var TextModel
      */
     private $title;
 
@@ -38,12 +39,12 @@ abstract class ElementAbstract implements ElementInterface
         return $this;
     }
 
-    public function getTitle(): string
+    public function getTitle(): TextModel
     {
         return $this->title;
     }
 
-    public function setTitle(string $title): ElementInterface
+    public function setTitle(TextModel $title): ElementInterface
     {
         $this->title = $title;
 

@@ -11,8 +11,9 @@ class ChoiceParser
     public function parse(\stdClass $data): ChoiceModel
     {
         $choiceModel = new ChoiceModel();
+        $textParser = new TextParser();
 
-        $choiceModel->setText($data->text);
+        $choiceModel->setText($textParser->parse($data->text));
         $choiceModel->setValue($data->value);
 
         return $choiceModel;

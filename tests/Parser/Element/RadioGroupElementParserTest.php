@@ -30,7 +30,10 @@ class RadioGroupElementParserTest extends TestCase
         ];
 
         $choice2 = (object)[
-            'text'  => 'choice 2',
+            'text'  => (object)[
+                'default' => 'choice 2',
+                'it' => 'opzione 2'
+            ],
             'value' => '2'
         ];
 
@@ -54,7 +57,28 @@ class RadioGroupElementParserTest extends TestCase
 
         $this->assertInstanceOf(RadiogroupElement::class, $model);
         $this->assertEquals($this->element->name, $model->getName());
-        $this->assertEquals($this->element->title, $model->getTitle());
+        $this->assertEquals($this->element->title, $model->getTitle()->getDefaultValue());
+        $this->assertEquals($this->element->isRequired, $model->isRequired());
+        $this->assertEquals($this->element->enableIf, $model->getEnableIf());
+        $this->assertTrue($model->hasOther());
+
+        foreach($model->getChoices() as $choice){
+            $this->assertInstanceOf(ChoiceModel::class, $choice);
+        }
+    }
+
+    public function testParseSuccessWithTranslation()
+    {
+        $this->element->title = (object)[
+            'default' => 'def title',
+            'en' => 'en title'
+        ];
+        $model = $this->sut->parse($this->element);
+
+        $this->assertInstanceOf(RadiogroupElement::class, $model);
+        $this->assertEquals($this->element->name, $model->getName());
+        $this->assertEquals($this->element->title->default, $model->getTitle()->getDefaultValue());
+        $this->assertEquals($this->element->title->en, $model->getTitle()->getTranslatedValue('en'));
         $this->assertEquals($this->element->isRequired, $model->isRequired());
         $this->assertEquals($this->element->enableIf, $model->getEnableIf());
         $this->assertTrue($model->hasOther());

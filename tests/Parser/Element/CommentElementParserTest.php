@@ -41,7 +41,23 @@ class CommentElementParserTest extends TestCase
 
         $this->assertInstanceOf(CommentElement::class, $model);
         $this->assertEquals($this->element->name, $model->getName());
-        $this->assertEquals($this->element->title, $model->getTitle());
+        $this->assertEquals($this->element->title, $model->getTitle()->getDefaultValue());
+        $this->assertEquals($this->element->isRequired, $model->isRequired());
+        $this->assertEquals($this->element->enableIf, $model->getEnableIf());
+    }
+
+    public function testParseSuccessWithTranslation()
+    {
+        $this->element->title = (object)[
+            'default' => 'def title',
+            'en' => 'en title'
+        ];
+        $model  = $this->sut->parse($this->element);
+
+        $this->assertInstanceOf(CommentElement::class, $model);
+        $this->assertEquals($this->element->name, $model->getName());
+        $this->assertEquals($this->element->title->default, $model->getTitle()->getDefaultValue());
+        $this->assertEquals($this->element->title->en, $model->getTitle()->getTranslatedValue('en'));
         $this->assertEquals($this->element->isRequired, $model->isRequired());
         $this->assertEquals($this->element->enableIf, $model->getEnableIf());
     }

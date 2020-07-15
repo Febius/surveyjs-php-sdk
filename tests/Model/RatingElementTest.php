@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use SurveyJsPhpSdk\Model\ChoiceModel;
 use SurveyJsPhpSdk\Model\Element\RatingElement;
 use SurveyJsPhpSdk\Model\ResultModel;
+use SurveyJsPhpSdk\Parser\TextParser;
 
 class RatingElementTest extends TestCase
 {
@@ -17,15 +18,21 @@ class RatingElementTest extends TestCase
      */
     private $rating;
 
+    /**
+     * @var TextParser
+     */
+    private $textParser;
+
     protected function setUp()
     {
+        $this->textParser = new TextParser();
         $this->rating = new RatingElement();
         $this->rating->setName('Great rating question');
 
         $choice1 = new ChoiceModel();
-        $choice1->setText('1')->setValue('1');
+        $choice1->setText($this->textParser->parse('1'))->setValue('1');
         $choice2 = new ChoiceModel();
-        $choice2->setText('2')->setValue('2');
+        $choice2->setText($this->textParser->parse('2'))->setValue('2');
 
         $this->rating->addChoice($choice1);
         $this->rating->addChoice($choice2);

@@ -3,11 +3,11 @@
 
 namespace SurveyJsPhpSdk\Tests\Parser\Element;
 
-
 use PHPUnit\Framework\TestCase;
 use SurveyJsPhpSdk\Factory\ElementFactory;
 use SurveyJsPhpSdk\Model\ChoiceModel;
 use SurveyJsPhpSdk\Model\Element\RatingElement;
+use SurveyJsPhpSdk\Model\TextModel;
 use SurveyJsPhpSdk\Parser\Element\RatingElementParser;
 
 class RatingElementParserTest extends TestCase
@@ -29,6 +29,13 @@ class RatingElementParserTest extends TestCase
             'value' => '6'
         ];
 
+        $choiceWithTranslation = (object)[
+            'text' => (object)[
+                'default' => 'choise 5'
+            ],
+            'value' => '5'
+        ];
+
         $this->elements[] = (object)[
             'type'         => ElementFactory::RATING_TYPE,
             'name'         => 'element_1',
@@ -41,7 +48,9 @@ class RatingElementParserTest extends TestCase
         $this->elements[] = (object)[
             'type'         => ElementFactory::RATING_TYPE,
             'name'         => 'element_2',
-            'title'        => 'Element 2',
+            'title'        => (object)[
+                'default' => 'Element 2'
+            ],
             'isRequired'   => false,
             'enableIf'     => 'implausible conditions',
             'rateValues'   => [
@@ -49,7 +58,7 @@ class RatingElementParserTest extends TestCase
                 '2',
                 '3',
                 '4',
-                '5',
+                $choiceWithTranslation,
                 $choice
             ],
             'rateMax'      => 6
@@ -60,20 +69,36 @@ class RatingElementParserTest extends TestCase
 
     public function testParseSuccess()
     {
-        foreach($this->elements as $element){
+        foreach ($this->elements as $element) {
             $model = $this->sut->parse($element);
-
             $this->assertInstanceOf(RatingElement::class, $model);
+            $this->assertInstanceOf(TextModel::class, $model->getTitle());
             $this->assertEquals($element->rateMax, count($model->getChoices()));
             $this->assertEquals($element->name, $model->getName());
-            $this->assertEquals($element->title, $model->getTitle());
+            if (is_string($element->title)) {
+                $this->assertEquals($element->title, $model->getTitle()->getDefaultValue());
+            } else {
+                $this->assertEquals($element->title->default, $model->getTitle()->getDefaultValue());
+            }
             $this->assertEquals($element->isRequired, $model->isRequired());
             $this->assertEquals($element->enableIf, $model->getEnableIf());
 
-            foreach ($model->getChoices() as $index => $choice){
-                $this->assertInstanceOf(ChoiceModel::class, $choice);
-                $this->assertEquals((string)($index + 1), $choice->getValue());
-                $this->assertEquals((string)($index + 1), $choice->getText());
+            $choicesModels = $model->getChoices();
+            for ($i = 0; $i < $element->rateMax; $i++) {
+                $this->assertInstanceOf(ChoiceModel::class, $choicesModels[$i]);
+                $this->assertInstanceOf(TextModel::class, $choicesModels[$i]->getText());
+
+                if (is_object($element->rateValues[$i])) {
+                    $this->assertEquals(
+                        $element->rateValues[$i]->text->default ?? $element->rateValues[$i]->text,
+                        $choicesModels[$i]->getText()->getDefaultValue()
+                    );
+                } else {
+                    $this->assertEquals(
+                        isset($element->rateValues[$i]) ? $element->rateValues[$i] : (string)($i + 1),
+                        $choicesModels[$i]->getText()->getDefaultValue()
+                    );
+                }
             }
         }
     }
