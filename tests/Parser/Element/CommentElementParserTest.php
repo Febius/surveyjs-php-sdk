@@ -8,6 +8,7 @@ use PHPStan\Testing\TestCase;
 use SurveyJsPhpSdk\Exception\ElementNameNotFoundException;
 use SurveyJsPhpSdk\Factory\ElementFactory;
 use SurveyJsPhpSdk\Model\Element\CommentElement;
+use SurveyJsPhpSdk\Model\TranslationModel;
 use SurveyJsPhpSdk\Parser\Element\CommentElementParser;
 
 class CommentElementParserTest extends TestCase
@@ -57,7 +58,8 @@ class CommentElementParserTest extends TestCase
         $this->assertInstanceOf(CommentElement::class, $model);
         $this->assertEquals($this->element->name, $model->getName());
         $this->assertEquals($this->element->title->default, $model->getTitle()->getDefaultValue());
-        $this->assertEquals($this->element->title->en, $model->getTitle()->getTranslatedValue('en'));
+        $this->assertInstanceOf(TranslationModel::class, $model->getTitle()->getTranslation('en'));
+        $this->assertEquals($this->element->title->en, $model->getTitle()->getTranslation('en')->getTranslation());
         $this->assertEquals($this->element->isRequired, $model->isRequired());
         $this->assertEquals($this->element->enableIf, $model->getEnableIf());
     }

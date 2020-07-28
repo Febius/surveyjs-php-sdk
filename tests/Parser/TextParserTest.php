@@ -35,8 +35,8 @@ class TextParserTest extends TestCase
 
         $this->assertInstanceOf(TextModel::class, $model);
         $this->assertEquals('def text', $model->getDefaultValue());
-        $this->assertEquals('it text', $model->getTranslatedValue('it'));
-        $this->assertEquals('def text', $model->getTranslatedValue('wrong_locale'));
+        $this->assertEquals('it text', $model->getTranslation('it')->getTranslation());
+        $this->assertEquals('def text', $model->getTranslation('wrong_locale'));
     }
 
     public function testParseSuccessWithoutDefaultValue()
@@ -49,8 +49,8 @@ class TextParserTest extends TestCase
 
         $this->assertInstanceOf(TextModel::class, $model);
         $this->assertEquals('', $model->getDefaultValue());
-        $this->assertEquals('it text', $model->getTranslatedValue('it'));
-        $this->assertEquals('', $model->getTranslatedValue('wrong_locale'));
+        $this->assertEquals('it text', $model->getTranslation('it')->getTranslation());
+        $this->assertEquals('', $model->getTranslation('wrong_locale'));
     }
 
     public function testParseSuccessWithString()
@@ -61,8 +61,8 @@ class TextParserTest extends TestCase
 
         $this->assertInstanceOf(TextModel::class, $model);
         $this->assertEquals('def text', $model->getDefaultValue());
-        $this->assertEquals('def text', $model->getTranslatedValue('it'));
-        $this->assertEquals('def text', $model->getTranslatedValue('wrong_locale'));
+        $this->assertEquals('def text', $model->getTranslation('it'));
+        $this->assertEquals('def text', $model->getTranslation('wrong_locale'));
     }
 
     public function testParseRaiseException()

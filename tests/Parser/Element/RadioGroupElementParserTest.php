@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use SurveyJsPhpSdk\Factory\ElementFactory;
 use SurveyJsPhpSdk\Model\ChoiceModel;
 use SurveyJsPhpSdk\Model\Element\RadioGroupElement;
+use SurveyJsPhpSdk\Model\TextModel;
 use SurveyJsPhpSdk\Parser\Element\RadioGroupElementParser;
 
 class RadioGroupElementParserTest extends TestCase
@@ -64,6 +65,7 @@ class RadioGroupElementParserTest extends TestCase
 
         foreach($model->getChoices() as $choice){
             $this->assertInstanceOf(ChoiceModel::class, $choice);
+            $this->assertInstanceOf(TextModel::class, $choice->getText());
         }
     }
 
@@ -78,13 +80,14 @@ class RadioGroupElementParserTest extends TestCase
         $this->assertInstanceOf(RadiogroupElement::class, $model);
         $this->assertEquals($this->element->name, $model->getName());
         $this->assertEquals($this->element->title->default, $model->getTitle()->getDefaultValue());
-        $this->assertEquals($this->element->title->en, $model->getTitle()->getTranslatedValue('en'));
+        $this->assertEquals($this->element->title->en, $model->getTitle()->getTranslation('en')->getTranslation());
         $this->assertEquals($this->element->isRequired, $model->isRequired());
         $this->assertEquals($this->element->enableIf, $model->getEnableIf());
         $this->assertTrue($model->hasOther());
 
         foreach($model->getChoices() as $choice){
             $this->assertInstanceOf(ChoiceModel::class, $choice);
+            $this->assertInstanceOf(TextModel::class, $choice->getText());
         }
     }
 }

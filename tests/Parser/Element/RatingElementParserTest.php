@@ -8,6 +8,7 @@ use SurveyJsPhpSdk\Factory\ElementFactory;
 use SurveyJsPhpSdk\Model\ChoiceModel;
 use SurveyJsPhpSdk\Model\Element\RatingElement;
 use SurveyJsPhpSdk\Model\TextModel;
+use SurveyJsPhpSdk\Model\TranslationModel;
 use SurveyJsPhpSdk\Parser\Element\RatingElementParser;
 
 class RatingElementParserTest extends TestCase
@@ -31,7 +32,8 @@ class RatingElementParserTest extends TestCase
 
         $choiceWithTranslation = (object)[
             'text' => (object)[
-                'default' => 'choise 5'
+                'default' => 'choise 5',
+                'en' => 'opt 5'
             ],
             'value' => '5'
         ];
@@ -49,7 +51,8 @@ class RatingElementParserTest extends TestCase
             'type'         => ElementFactory::RATING_TYPE,
             'name'         => 'element_2',
             'title'        => (object)[
-                'default' => 'Element 2'
+                'default' => 'Element 2',
+                'en' => 'title en'
             ],
             'isRequired'   => false,
             'enableIf'     => 'implausible conditions',
@@ -78,7 +81,10 @@ class RatingElementParserTest extends TestCase
             if (is_string($element->title)) {
                 $this->assertEquals($element->title, $model->getTitle()->getDefaultValue());
             } else {
+                $this->assertInstanceOf(TextModel::class, $model->getTitle());
+                $this->assertInstanceOf(TranslationModel::class, $model->getTitle()->getTranslation('en'));
                 $this->assertEquals($element->title->default, $model->getTitle()->getDefaultValue());
+                $this->assertEquals($element->title->en, $model->getTitle()->getTranslation('en')->getTranslation());
             }
             $this->assertEquals($element->isRequired, $model->isRequired());
             $this->assertEquals($element->enableIf, $model->getEnableIf());
