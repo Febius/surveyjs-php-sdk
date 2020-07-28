@@ -7,6 +7,8 @@ use PHPUnit\Framework\TestCase;
 use SurveyJsPhpSdk\Factory\ElementFactory;
 use SurveyJsPhpSdk\Model\ChoiceModel;
 use SurveyJsPhpSdk\Model\Element\CheckboxElement;
+use SurveyJsPhpSdk\Model\TextModel;
+use SurveyJsPhpSdk\Model\TranslationModel;
 use SurveyJsPhpSdk\Parser\Element\CheckboxElementParser;
 
 class CheckboxElementParserTest extends TestCase
@@ -84,6 +86,7 @@ class CheckboxElementParserTest extends TestCase
 
         $this->assertInstanceOf(CheckboxElement::class, $model);
         $this->assertEquals($element->name, $model->getName());
+        $this->assertInstanceOf(TextModel::class, $model->getTitle());
         $this->assertEquals($element->title, $model->getTitle()->getDefaultValue());
         $this->assertEquals($element->isRequired, $model->isRequired());
         $this->assertEquals($element->enableIf, $model->getEnableIf());
@@ -94,6 +97,7 @@ class CheckboxElementParserTest extends TestCase
         }
 
         $this->assertEquals(1+count($element->choices), count($choices));
+        $this->assertInstanceOf(TextModel::class, end($choices)->getText());
         $this->assertEquals('other', end($choices)->getText()->getDefaultValue());
     }
 
@@ -105,8 +109,10 @@ class CheckboxElementParserTest extends TestCase
 
         $this->assertInstanceOf(CheckboxElement::class, $model);
         $this->assertEquals($element->name, $model->getName());
+        $this->assertInstanceOf(TextModel::class, $model->getTitle());
         $this->assertEquals($element->title->default, $model->getTitle()->getDefaultValue());
-        $this->assertEquals($element->title->en, $model->getTitle()->getTranslatedValue('en'));
+        $this->assertInstanceOf(TranslationModel::class, $model->getTitle()->getTranslation('en'));
+        $this->assertEquals($element->title->en, $model->getTitle()->getTranslation('en')->getTranslation());
         $this->assertEquals($element->isRequired, $model->isRequired());
         $this->assertEquals($element->enableIf, $model->getEnableIf());
         $this->assertTrue($model->hasOther());
@@ -116,6 +122,7 @@ class CheckboxElementParserTest extends TestCase
         }
 
         $this->assertEquals(1+count($element->choices), count($choices));
+        $this->assertInstanceOf(TextModel::class, end($choices)->getText());
         $this->assertEquals($element->otherText->default, end($choices)->getText()->getDefaultValue());
     }
 
@@ -134,6 +141,7 @@ class CheckboxElementParserTest extends TestCase
 
         foreach ($choices as $choice) {
             $this->assertInstanceOf(ChoiceModel::class, $choice);
+            $this->assertInstanceOf(TextModel::class, $choice->getText());
         }
 
         $this->assertEquals(count($element->choices), count($choices));

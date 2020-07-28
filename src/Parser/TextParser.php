@@ -27,7 +27,10 @@ class TextParser
 
         if(is_object($data)) {
             foreach (Localization::LOCALES as $supportedLocale) {
-                $data->$supportedLocale && $textModel->setTranslatedValue($supportedLocale, $data->$supportedLocale);
+                $translationParser = new TranslationParser();
+                $data->$supportedLocale && $textModel->setTranslation(
+                    $translationParser->parse($supportedLocale, $data->$supportedLocale)
+                );
             }
         }
 

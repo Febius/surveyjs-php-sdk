@@ -8,7 +8,12 @@ use SurveyJsPhpSdk\Localization\Localization;
 class TextModel
 {
     /**
-     * @var object;
+     * @var string;
+     */
+    private $default;
+
+    /**
+     * @var TranslationModel[];
      */
     private $values;
 
@@ -19,17 +24,22 @@ class TextModel
 
     public function getDefaultValue(): string
     {
-        return $this->values->default;
+        return $this->default;
     }
 
     public function setDefaultValue(string $value): self
     {
-        $this->values->default = $value;
+        $this->default = $value;
 
         return $this;
     }
 
-    public function getTranslatedValue(string $locale): string
+    /**
+     * @param string $locale
+     *
+     * @return TranslationModel|string
+     */
+    public function getTranslation(string $locale)
     {
         if (!in_array($locale, Localization::LOCALES) || !isset($this->values->$locale)) {
             return $this->getDefaultValue();
@@ -39,20 +49,20 @@ class TextModel
     }
 
     /**
-     * @param string $locale
-     * @param string $value
+     * @param TranslationModel $translation
      *
      * @throws LocaleNotSupportedException
      *
      * @return TextModel
      */
-    public function setTranslatedValue(string $locale, string $value): self
+    public function setTranslation(TranslationModel $translation): self
     {
+        $locale = $translation->getLocale();
         if(!in_array($locale, Localization::LOCALES)) {
             throw new LocaleNotSupportedException($locale);
         }
 
-        $this->values->$locale = $value;
+        $this->values->$locale = $translation;
         return $this;
     }
 }
