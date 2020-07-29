@@ -3,6 +3,7 @@
 
 namespace SurveyJsPhpSdk\Parser;
 
+use SurveyJsPhpSdk\Exception\LocaleNotSupportedException;
 use SurveyJsPhpSdk\Localization\Localization;
 use SurveyJsPhpSdk\Model\TextModel;
 
@@ -26,10 +27,18 @@ class TextParser
         $textModel->setDefaultValue(is_string($data) ? $data : $data->default ?? '');
 
         if(is_object($data)) {
-            foreach (Localization::LOCALES as $supportedLocale) {
+            $arrayData = get_object_vars($data);
+            unset($arrayData['default']);
+
+            foreach ($arrayData as $locale => $translation) {
                 $translationParser = new TranslationParser();
-                $data->$supportedLocale && $textModel->setTranslation(
-                    $translationParser->parse($supportedLocale, $data->$supportedLocale)
+
+                if(!in_array($locale, Localization::LOCALES)) {
+                    throw new LocaleNotSupportedException($locale);
+                }
+
+                $textModel->setTranslation(
+                    $translationParser->parse($locale, $translation)
                 );
             }
         }

@@ -5,6 +5,7 @@ namespace SurveyJsPhpSdk\Tests\Parser;
 
 
 use PHPUnit\Framework\TestCase;
+use SurveyJsPhpSdk\Exception\LocaleNotSupportedException;
 use SurveyJsPhpSdk\Model\TextModel;
 use SurveyJsPhpSdk\Parser\TextParser;
 
@@ -65,10 +66,21 @@ class TextParserTest extends TestCase
         $this->assertEquals('def text', $model->getTranslation('wrong_locale'));
     }
 
-    public function testParseRaiseException()
+    public function testParseRaiseInvalidArgumentException()
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('$data must be a string or an object.');
         $this->sut->parse(false);
+    }
+
+    public function testParseRaiseLocaleNotSupportedException()
+    {
+        $this->text = (object)[
+            'NOT_SUPPORTED_LANG' => 'it text'
+        ];
+
+        $this->expectException(LocaleNotSupportedException::class);
+        $this->expectExceptionMessage('Locale "NOT_SUPPORTED_LANG" is not supported');
+        $this->sut->parse($this->text);
     }
 }
