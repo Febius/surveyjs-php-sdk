@@ -13,6 +13,7 @@ use SurveyJsPhpSdk\Model\Element\CheckboxElement;
 use SurveyJsPhpSdk\Model\Element\CommentElement;
 use SurveyJsPhpSdk\Model\Element\RadioGroupElement;
 use SurveyJsPhpSdk\Model\Element\RatingElement;
+use SurveyJsPhpSdk\Model\Element\TextElement;
 use SurveyJsPhpSdk\Parser\Element\CommentElementParser;
 use SurveyJsPhpSdk\Tests\Fake\FakeCustomElementConfiguration;
 use SurveyJsPhpSdk\Tests\Fake\FakeCustomElementModel;
@@ -36,6 +37,10 @@ class ElementFactoryTest extends TestCase
      * @var object
      */
     private $checkboxElement;
+    /**
+     * @var object
+     */
+    private $textElement;
     /**
      * @var object
      */
@@ -94,6 +99,19 @@ class ElementFactoryTest extends TestCase
             'choices'      => [$choice1, $choice2, 'item3']
         ];
 
+        $this->textElement = (object)[
+            'type'         => ElementFactory::TEXT_TYPE,
+            'inputType'    => ElementFactory::NUMBER_TYPE,
+            'name'         => 'element_4',
+            'title'        => 'Element 4',
+            'min'          => '1',
+            'max'          => '2',
+            'placeholder'  => 'insert value',
+            'step'         => 1,
+            'isRequired'   => true,
+            'enableIf'     => 'plausible conditions',
+        ];
+
         $this->customElement = (object)[
             'type'         => 'custom_test_element_type',
             'name'      => 'some_name'
@@ -132,6 +150,12 @@ class ElementFactoryTest extends TestCase
         $model = ElementFactory::create($this->checkboxElement, null);
 
         $this->assertInstanceOf(CheckboxElement::class, $model);
+    }
+
+    public function testCreateTextElementSuccess(){
+        $model = ElementFactory::create($this->textElement, null);
+
+        $this->assertInstanceOf(TextElement::class, $model);
     }
 
     public function testCreateCustomElementSuccess(){

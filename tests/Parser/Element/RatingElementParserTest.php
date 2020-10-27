@@ -94,7 +94,7 @@ class RatingElementParserTest extends TestCase
                 $this->assertInstanceOf(ChoiceModel::class, $choicesModels[$i]);
                 $this->assertInstanceOf(TextModel::class, $choicesModels[$i]->getText());
 
-                if (is_object($element->rateValues[$i])) {
+                if (isset($element->rateValues) && is_object($element->rateValues[$i])) {
                     $this->assertEquals(
                         $element->rateValues[$i]->text->default ?? $element->rateValues[$i]->text,
                         $choicesModels[$i]->getText()->getDefaultValue()

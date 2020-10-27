@@ -52,6 +52,22 @@ class SurveyTemplateParserTest extends TestCase
                     {
                       "type": "custom_test_element_type",
                       "name": "question2"
+                    },
+                    {
+                      "type": "text",
+                      "name": "number question",
+                      "inputType": "number",
+                      "min": "1",
+                      "max": "10",
+                      "step": "1"
+                    },
+                    {
+                      "type": "text",
+                      "name": "default text question",
+                      "placeHolder": {
+                        "default": "placeHolder ...",
+                        "it": "placeHolder it"
+                      }
                     }
                   ]
                 },
